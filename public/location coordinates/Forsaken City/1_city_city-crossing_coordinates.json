@@ -1,0 +1,56 @@
+{
+  "1_city": {
+    "city-crossing": [
+      {
+        "locationId": "Forsaken_City_A_Room_6_Strawberry",
+        "x": 0.31724137931034485,
+        "y": 0.9198552790264225
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_7zb_Strawberry",
+        "x": 0.013793103448275862,
+        "y": 0.6836238716515002
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_s1_Strawberry",
+        "x": 0.18448275862068966,
+        "y": 0.48715418630998064
+      },
+      {
+        "locationId": "Forsaken_City_A_Crystal_Heart",
+        "x": 0.1724137931034483,
+        "y": 0.5245769835178892
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_7z_Strawberry",
+        "x": 0.4853448275862069,
+        "y": 0.5573219310748091
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_8zb_Strawberry",
+        "x": 0.6517241379310345,
+        "y": 0.25092277893505827
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_7a_Strawberry",
+        "x": 0.8689655172413793,
+        "y": 0.4707817125315207
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_9z_Strawberry",
+        "x": 0.7353448275862069,
+        "y": 0.18309395899572414
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_8b_Strawberry",
+        "x": 0.8767241379310344,
+        "y": 0.19244965829770128
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_9_Strawberry",
+        "x": 0.9741379310344828,
+        "y": 0.09889266527793004
+      }
+    ]
+  }
+}

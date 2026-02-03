@@ -1,0 +1,167 @@
+{
+  "6_reflection": {
+    "reflection-hollows": [
+      {
+        "locationId": "Reflection_A_Crystal_Heart",
+        "x": 0.2696540880503145,
+        "y": 0.2910442020400942
+      },
+      {
+        "locationId": "Reflection_A_Cassette",
+        "x": 0.031446540880503145,
+        "y": 0.9291044202040094
+      },
+      {
+        "locationId": "Reflection_A_Golden_Strawberry",
+        "x": 0.785377358490566,
+        "y": 0.9911380525255011
+      },
+      {
+        "locationId": "Reflection_A_Level_Clear",
+        "x": 0.9787735849056604,
+        "y": 0.7242949674600366
+      }
+    ],
+    "city-start": [
+      {
+        "locationId": "Forsaken_City_A_Room_2_Strawberry",
+        "x": 0.2043103448275862,
+        "y": 0.72376540350227
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_3_Strawberry",
+        "x": 0.4681034482758621,
+        "y": 0.6454924488094135
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_3b_Strawberry",
+        "x": 0.596551724137931,
+        "y": 0.2897062911146113
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_5_Strawberry",
+        "x": 0.631896551724138,
+        "y": 0.028796442138423053
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_5z_Strawberry",
+        "x": 0.5094827586206897,
+        "y": 0.20550356712684148
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_5a_Strawberry",
+        "x": 0.9482758620689656,
+        "y": 0.20668952098582413
+      },
+      {
+        "locationId": "Forsaken_City_A_Golden_Strawberry",
+        "x": 0.012578616352201259,
+        "y": 0.9413695663209192
+      }
+    ],
+    "city-crossing": [
+      {
+        "locationId": "Forsaken_City_A_Room_6_Strawberry",
+        "x": 0.31724137931034485,
+        "y": 0.9198552790264224
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_7zb_Strawberry",
+        "x": 0.013793103448275862,
+        "y": 0.6836238716515002
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_s1_Strawberry",
+        "x": 0.1844827586206897,
+        "y": 0.48715418630998064
+      },
+      {
+        "locationId": "Forsaken_City_A_Crystal_Heart",
+        "x": 0.1724137931034483,
+        "y": 0.5245769835178892
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_7z_Strawberry",
+        "x": 0.4853448275862069,
+        "y": 0.5573219310748091
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_8zb_Strawberry",
+        "x": 0.6517241379310345,
+        "y": 0.25092277893505827
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_7a_Strawberry",
+        "x": 0.8689655172413793,
+        "y": 0.4707817125315207
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_9z_Strawberry",
+        "x": 0.7353448275862069,
+        "y": 0.18309395899572417
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_8b_Strawberry",
+        "x": 0.8767241379310344,
+        "y": 0.19244965829770128
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_9_Strawberry",
+        "x": 0.9741379310344828,
+        "y": 0.09889266527793004
+      },
+      {
+        "locationId": "Forsaken_City_A_Crossing",
+        "x": 0.2315910858318463,
+        "y": 0.9688044062666459
+      }
+    ],
+    "city-chasm": [
+      {
+        "locationId": "Forsaken_City_A_Room_9b_Strawberry",
+        "x": 0.7224137931034482,
+        "y": 0.9078813689059608
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_9c_Strawberry",
+        "x": 0.9017241379310345,
+        "y": 0.8820508538265626
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_10zb_Strawberry",
+        "x": 0.020689655172413793,
+        "y": 0.8125756753371467
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_11_Strawberry",
+        "x": 0.528448275862069,
+        "y": 0.6184014585333946
+      },
+      {
+        "locationId": "Forsaken_City_A_Cassette",
+        "x": 0.2482758620689655,
+        "y": 0.4972652498851822
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_12z_Strawberry",
+        "x": 0.15517241379310345,
+        "y": 0.25321141775569567
+      },
+      {
+        "locationId": "Forsaken_City_A_Level_Clear",
+        "x": 0.9,
+        "y": 0.1
+      },
+      {
+        "locationId": "Forsaken_City_A_Chasm",
+        "x": 0.5117924528301887,
+        "y": 0.9637095238699687
+      },
+      {
+        "locationId": "Forsaken_City_A_Winged_Golden_Strawberry",
+        "x": 0.7948113207547169,
+        "y": 0.07740445031162337
+      }
+    ]
+  }
+}

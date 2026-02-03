@@ -1,0 +1,41 @@
+{
+  "1_city": {
+    "city-chasm": [
+      {
+        "locationId": "Forsaken_City_A_Room_9b_Strawberry",
+        "x": 0.725,
+        "y": 0.9123349059886157
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_9c_Strawberry",
+        "x": 0.9025862068965518,
+        "y": 0.8882858057422793
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_10zb_Strawberry",
+        "x": 0.019827586206896553,
+        "y": 0.8125756753371467
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_11_Strawberry",
+        "x": 0.5267241379310345,
+        "y": 0.6175107511168636
+      },
+      {
+        "locationId": "Forsaken_City_A_Cassette",
+        "x": 0.24655172413793103,
+        "y": 0.5017187869678371
+      },
+      {
+        "locationId": "Forsaken_City_A_Room_12z_Strawberry",
+        "x": 0.1543103448275862,
+        "y": 0.2523207103391647
+      },
+      {
+        "locationId": "Forsaken_City_A_Level_Clear",
+        "x": 0.9025862068965518,
+        "y": 0.11158893852727096
+      }
+    ]
+  }
+}

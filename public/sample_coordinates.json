@@ -1,0 +1,145 @@
+{
+  "1_city": {
+    "city-start": [
+      {
+        "locationId": "Forsaken City A - Room 2 Strawberry",
+        "x": 0.19982698961937717,
+        "y": 0.7266007559254501
+      },
+      {
+        "locationId": "Forsaken City A - Room 3 Strawberry",
+        "x": 0.25,
+        "y": 0.75
+      },
+      {
+        "locationId": "Forsaken City A - Room 3b Strawberry",
+        "x": 0.35,
+        "y": 0.70
+      },
+      {
+        "locationId": "Forsaken City A - Room 5 Strawberry",
+        "x": 0.45,
+        "y": 0.65
+      },
+      {
+        "locationId": "Forsaken City A - Room 5z Strawberry",
+        "x": 0.55,
+        "y": 0.60
+      },
+      {
+        "locationId": "Forsaken City A - Room 5a Strawberry",
+        "x": 0.65,
+        "y": 0.55
+      },
+      {
+        "locationId": "Forsaken City A - Room 6 Strawberry",
+        "x": 0.75,
+        "y": 0.50
+      },
+      {
+        "locationId": "Forsaken City A - Room 7zb Strawberry",
+        "x": 0.85,
+        "y": 0.45
+      },
+      {
+        "locationId": "Forsaken City A - Room s1 Strawberry",
+        "x": 0.20,
+        "y": 0.40
+      },
+      {
+        "locationId": "Forsaken City A - Crystal Heart",
+        "x": 0.30,
+        "y": 0.35
+      },
+      {
+        "locationId": "Forsaken City A - Room 7z Strawberry",
+        "x": 0.40,
+        "y": 0.30
+      },
+      {
+        "locationId": "Forsaken City A - Room 8zb Strawberry",
+        "x": 0.50,
+        "y": 0.25
+      },
+      {
+        "locationId": "Forsaken City A - Room 7a Strawberry",
+        "x": 0.60,
+        "y": 0.20
+      },
+      {
+        "locationId": "Forsaken City A - Room 9z Strawberry",
+        "x": 0.70,
+        "y": 0.15
+      },
+      {
+        "locationId": "Forsaken City A - Room 8b Strawberry",
+        "x": 0.80,
+        "y": 0.10
+      },
+      {
+        "locationId": "Forsaken City A - Room 9 Strawberry",
+        "x": 0.90,
+        "y": 0.05
+      }
+    ],
+    "city-crossing": [
+      {
+        "locationId": "Forsaken City A - Room 9b Strawberry",
+        "x": 0.10,
+        "y": 0.90
+      },
+      {
+        "locationId": "Forsaken City A - Room 9c Strawberry",
+        "x": 0.20,
+        "y": 0.85
+      },
+      {
+        "locationId": "Forsaken City A - Room 10zb Strawberry",
+        "x": 0.30,
+        "y": 0.80
+      },
+      {
+        "locationId": "Forsaken City A - Room 11 Strawberry",
+        "x": 0.40,
+        "y": 0.75
+      },
+      {
+        "locationId": "Forsaken City A - Cassette",
+        "x": 0.50,
+        "y": 0.70
+      },
+      {
+        "locationId": "Forsaken City A - Room 12z Strawberry",
+        "x": 0.60,
+        "y": 0.65
+      },
+      {
+        "locationId": "Forsaken City A - Golden Strawberry",
+        "x": 0.70,
+        "y": 0.60
+      },
+      {
+        "locationId": "Forsaken City A - Winged Golden Strawberry",
+        "x": 0.80,
+        "y": 0.55
+      },
+      {
+        "locationId": "Forsaken City B - Golden Strawberry",
+        "x": 0.15,
+        "y": 0.45
+      },
+      {
+        "locationId": "Forsaken City C - Golden Strawberry",
+        "x": 0.25,
+        "y": 0.40
+      }
+    ],
+    "city-chasm": [
+      {
+        "locationId": "Forsaken City A - Room 12 Strawberry",
+        "x": 0.50,
+        "y": 0.50
+      }
+    ]
+  }
+}

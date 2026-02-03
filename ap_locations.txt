@@ -1,0 +1,328 @@
+The Summit C - Level Clear
+The Summit C - Golden Strawberry
+The Summit B - Level Clear
+The Summit B - Golden Strawberry
+The Summit B - 500 M
+The Summit B - 3000 M
+The Summit B - 2500 M
+The Summit B - 2000 M
+The Summit B - 1500 M
+The Summit B - 1000 M
+The Summit A - Room g-03 Strawberry
+The Summit A - Room g-01 Strawberry 3
+The Summit A - Room g-01 Strawberry 2
+The Summit A - Room g-01 Strawberry 1
+The Summit A - Room g-00b Strawberry 3
+The Summit A - Room g-00b Strawberry 2
+The Summit A - Room g-00b Strawberry 1
+The Summit A - Room f-11 Strawberry 3
+The Summit A - Room f-11 Strawberry 2
+The Summit A - Room f-11 Strawberry 1
+The Summit A - Room f-08c Strawberry
+The Summit A - Room f-08b Strawberry
+The Summit A - Room f-07 Strawberry
+The Summit A - Room f-01 Strawberry
+The Summit A - Room f-00 Strawberry
+The Summit A - Room e-13 Strawberry
+The Summit A - Room e-12 Strawberry
+The Summit A - Room e-11 Strawberry
+The Summit A - Room e-10 Strawberry
+The Summit A - Room e-09 Strawberry
+The Summit A - Room e-07 Strawberry
+The Summit A - Room e-05 Strawberry
+The Summit A - Room e-02 Strawberry
+The Summit A - Room d-10b Strawberry
+The Summit A - Room d-08 Strawberry
+The Summit A - Room d-07 Strawberry
+The Summit A - Room d-04 Strawberry
+The Summit A - Room d-03 Strawberry
+The Summit A - Room d-01d Strawberry
+The Summit A - Room d-01c Strawberry
+The Summit A - Room d-00 Strawberry
+The Summit A - Room c-09 Strawberry
+The Summit A - Room c-08 Strawberry
+The Summit A - Room c-07b Strawberry
+The Summit A - Room c-06b Strawberry
+The Summit A - Room c-05 Strawberry
+The Summit A - Room c-03b Strawberry
+The Summit A - Room b-09 Strawberry
+The Summit A - Room b-08 Strawberry
+The Summit A - Room b-04 Strawberry
+The Summit A - Room b-02e Strawberry
+The Summit A - Room b-02b Strawberry
+The Summit A - Room b-02 Strawberry
+The Summit A - Room a-05 Strawberry
+The Summit A - Room a-04b Strawberry 2
+The Summit A - Room a-04b Strawberry 1
+The Summit A - Room a-02b Strawberry
+The Summit A - Level Clear
+The Summit A - Golden Strawberry
+The Summit A - Gem 6
+The Summit A - Gem 5
+The Summit A - Gem 4
+The Summit A - Gem 3
+The Summit A - Gem 2
+The Summit A - Gem 1
+The Summit A - Crystal Heart
+The Summit A - Cassette
+The Summit A - 500 M
+The Summit A - 3000 M
+The Summit A - 2500 M Key
+The Summit A - 2500 M
+The Summit A - 2000 M
+The Summit A - 1500 M
+The Summit A - 1000 M
+Reflection C - Level Clear
+Reflection C - Golden Strawberry
+Reflection B - Rock Bottom
+Reflection B - Reprieve
+Reflection B - Reflection
+Reflection B - Level Clear
+Reflection B - Golden Strawberry
+Reflection A - Rock Bottom
+Reflection A - Resolution
+Reflection A - Reflection
+Reflection A - Level Clear
+Reflection A - Hollows
+Reflection A - Golden Strawberry
+Reflection A - Crystal Heart
+Reflection A - Cassette
+Prologue - Level Clear
+Old Site C - Level Clear
+Old Site C - Golden Strawberry
+Old Site B - Level Clear
+Old Site B - Golden Strawberry
+Old Site B - Dream Altar
+Old Site B - Combination Lock
+Old Site A - Room end_3c Strawberry
+Old Site A - Room d6 Strawberry
+Old Site A - Room d5 Strawberry
+Old Site A - Room d4 Strawberry
+Old Site A - Room d3 Strawberry
+Old Site A - Room d2 Strawberry 2
+Old Site A - Room d2 Strawberry 1
+Old Site A - Room d1 Strawberry
+Old Site A - Room d0 Strawberry
+Old Site A - Room 9b Strawberry
+Old Site A - Room 9 Strawberry
+Old Site A - Room 8 Strawberry
+Old Site A - Room 5 Strawberry
+Old Site A - Room 4 Strawberry
+Old Site A - Room 12d Strawberry
+Old Site A - Room 12c Strawberry
+Old Site A - Room 10 Strawberry
+Old Site A - Room 1 Strawberry
+Old Site A - Level Clear
+Old Site A - Intervention
+Old Site A - Golden Strawberry
+Old Site A - Crystal Heart
+Old Site A - Cassette
+Old Site A - Awake
+Mirror Temple C - Level Clear
+Mirror Temple C - Golden Strawberry
+Mirror Temple B - Through the Mirror
+Mirror Temple B - Mix Master
+Mirror Temple B - Level Clear
+Mirror Temple B - Golden Strawberry
+Mirror Temple B - Central Chamber Key 2
+Mirror Temple B - Central Chamber Key 1
+Mirror Temple B - Central Chamber
+Mirror Temple A - Unravelling
+Mirror Temple A - Search Key 3
+Mirror Temple A - Search Key 2
+Mirror Temple A - Search Key 1
+Mirror Temple A - Search
+Mirror Temple A - Room e-06 Strawberry
+Mirror Temple A - Room d-19 Strawberry
+Mirror Temple A - Room d-15 Strawberry 2
+Mirror Temple A - Room d-15 Strawberry 1
+Mirror Temple A - Room d-13 Strawberry
+Mirror Temple A - Room d-04 Strawberry 2
+Mirror Temple A - Room d-04 Strawberry 1
+Mirror Temple A - Room c-08 Strawberry
+Mirror Temple A - Room b-21 Strawberry
+Mirror Temple A - Room b-20 Strawberry 2
+Mirror Temple A - Room b-20 Strawberry 1
+Mirror Temple A - Room b-18 Strawberry
+Mirror Temple A - Room b-17 Strawberry 2
+Mirror Temple A - Room b-17 Strawberry 1
+Mirror Temple A - Room b-12 Strawberry
+Mirror Temple A - Room b-10 Strawberry
+Mirror Temple A - Room b-05 Strawberry
+Mirror Temple A - Room b-03 Strawberry
+Mirror Temple A - Room b-01c Strawberry
+Mirror Temple A - Room a-15 Strawberry
+Mirror Temple A - Room a-14 Strawberry
+Mirror Temple A - Room a-11 Strawberry
+Mirror Temple A - Room a-07 Strawberry
+Mirror Temple A - Room a-06 Strawberry
+Mirror Temple A - Room a-05 Strawberry
+Mirror Temple A - Room a-04 Strawberry
+Mirror Temple A - Room a-03 Strawberry
+Mirror Temple A - Room a-02 Strawberry
+Mirror Temple A - Room a-01 Strawberry 2
+Mirror Temple A - Room a-01 Strawberry 1
+Mirror Temple A - Room a-00x Strawberry
+Mirror Temple A - Rescue
+Mirror Temple A - Level Clear
+Mirror Temple A - Golden Strawberry
+Mirror Temple A - Entrance Key
+Mirror Temple A - Depths Key
+Mirror Temple A - Depths
+Mirror Temple A - Crystal Heart
+Mirror Temple A - Cassette
+Golden Ridge C - Level Clear
+Golden Ridge C - Golden Strawberry
+Golden Ridge B - Stepping Stones
+Golden Ridge B - Level Clear
+Golden Ridge B - Gusty Canyon
+Golden Ridge B - Golden Strawberry
+Golden Ridge B - Eye of the Storm
+Golden Ridge A - Shrine
+Golden Ridge A - Room d-09 Strawberry
+Golden Ridge A - Room d-07 Strawberry
+Golden Ridge A - Room d-04 Strawberry
+Golden Ridge A - Room d-01 Strawberry
+Golden Ridge A - Room d-00b Strawberry
+Golden Ridge A - Room c-10 Strawberry
+Golden Ridge A - Room c-08 Strawberry
+Golden Ridge A - Room c-06b Strawberry
+Golden Ridge A - Room c-06 Strawberry
+Golden Ridge A - Room c-05 Strawberry
+Golden Ridge A - Room c-01 Strawberry
+Golden Ridge A - Room c-00 Strawberry
+Golden Ridge A - Room b-secb Strawberry
+Golden Ridge A - Room b-08 Strawberry
+Golden Ridge A - Room b-07 Strawberry
+Golden Ridge A - Room b-04 Strawberry
+Golden Ridge A - Room b-03 Strawberry
+Golden Ridge A - Room b-02 Strawberry 2
+Golden Ridge A - Room b-02 Strawberry 1
+Golden Ridge A - Room b-01 Strawberry 2
+Golden Ridge A - Room b-01 Strawberry 1
+Golden Ridge A - Room a-10 Strawberry
+Golden Ridge A - Room a-09 Strawberry
+Golden Ridge A - Room a-07 Strawberry
+Golden Ridge A - Room a-06 Strawberry
+Golden Ridge A - Room a-04 Strawberry
+Golden Ridge A - Room a-03 Strawberry
+Golden Ridge A - Room a-02 Strawberry
+Golden Ridge A - Room a-01x Strawberry
+Golden Ridge A - Old Trail
+Golden Ridge A - Level Clear
+Golden Ridge A - Golden Strawberry
+Golden Ridge A - Crystal Heart
+Golden Ridge A - Cliff Face
+Golden Ridge A - Cassette
+Forsaken City C - Level Clear
+Forsaken City C - Golden Strawberry
+Forsaken City B - Scrap Pit
+Forsaken City B - Level Clear
+Forsaken City B - Golden Strawberry
+Forsaken City B - Contraption
+Forsaken City A - Winged Golden Strawberry
+Forsaken City A - Room s1 Strawberry
+Forsaken City A - Room 9z Strawberry
+Forsaken City A - Room 9c Strawberry
+Forsaken City A - Room 9b Strawberry
+Forsaken City A - Room 9 Strawberry
+Forsaken City A - Room 8zb Strawberry
+Forsaken City A - Room 8b Strawberry
+Forsaken City A - Room 7zb Strawberry
+Forsaken City A - Room 7z Strawberry
+Forsaken City A - Room 7a Strawberry
+Forsaken City A - Room 6 Strawberry
+Forsaken City A - Room 5z Strawberry
+Forsaken City A - Room 5a Strawberry
+Forsaken City A - Room 5 Strawberry
+Forsaken City A - Room 3b Strawberry
+Forsaken City A - Room 3 Strawberry
+Forsaken City A - Room 2 Strawberry
+Forsaken City A - Room 12z Strawberry
+Forsaken City A - Room 11 Strawberry
+Forsaken City A - Room 10zb Strawberry
+Forsaken City A - Level Clear
+Forsaken City A - Golden Strawberry
+Forsaken City A - Crystal Heart
+Forsaken City A - Crossing
+Forsaken City A - Chasm
+Forsaken City A - Cassette
+Farewell - Stubbornness
+Farewell - Singular
+Farewell - Remembered
+Farewell - Reconciliation
+Farewell - Power Source Key 5
+Farewell - Power Source Key 4
+Farewell - Power Source Key 3
+Farewell - Power Source Key 2
+Farewell - Power Source Key 1
+Farewell - Power Source
+Farewell - Moon Berry
+Farewell - Level Clear
+Farewell - Golden Strawberry
+Farewell - Farewell
+Farewell - Event Horizon
+Farewell - Determination
+Farewell - Crystal Heart?
+Core C - Level Clear
+Core C - Golden Strawberry
+Core B - Level Clear
+Core B - Into the Core
+Core B - Heartbeat
+Core B - Golden Strawberry
+Core B - Burning or Freezing
+Core A - Room d-06 Strawberry
+Core A - Room c-03b Strawberry
+Core A - Room c-02 Strawberry
+Core A - Room c-00b Strawberry
+Core A - Room b-06 Strawberry
+Core A - Level Clear
+Core A - Into the Core
+Core A - Hot and Cold
+Core A - Heart of the Mountain
+Core A - Golden Strawberry
+Core A - Cassette
+Celestial Resort C - Level Clear
+Celestial Resort C - Golden Strawberry
+Celestial Resort B - Staff Quarters
+Celestial Resort B - Rooftop
+Celestial Resort B - Library
+Celestial Resort B - Level Clear
+Celestial Resort B - Golden Strawberry
+Celestial Resort A - Room s3 Strawberry
+Celestial Resort A - Room s2 Strawberry 2
+Celestial Resort A - Room s2 Strawberry 1
+Celestial Resort A - Room roof06 Strawberry 2
+Celestial Resort A - Room roof06 Strawberry 1
+Celestial Resort A - Room roof03 Strawberry
+Celestial Resort A - Room 13-x Strawberry
+Celestial Resort A - Room 13-b Strawberry
+Celestial Resort A - Room 12-y Strawberry
+Celestial Resort A - Room 12-c Strawberry
+Celestial Resort A - Room 11-d Strawberry
+Celestial Resort A - Room 10-y Strawberry
+Celestial Resort A - Room 08-x Strawberry
+Celestial Resort A - Room 07-b Strawberry
+Celestial Resort A - Room 06-d Strawberry
+Celestial Resort A - Room 06-c Strawberry
+Celestial Resort A - Room 06-b Strawberry
+Celestial Resort A - Room 06-a Strawberry
+Celestial Resort A - Room 05-c Strawberry
+Celestial Resort A - Room 04-c Strawberry
+Celestial Resort A - Room 04-b Strawberry
+Celestial Resort A - Room 03-b Strawberry 2
+Celestial Resort A - Room 03-b Strawberry 1
+Celestial Resort A - Room 00-b Strawberry
+Celestial Resort A - Room 00-a Strawberry
+Celestial Resort A - Presidential Suite Key
+Celestial Resort A - Presidential Suite
+Celestial Resort A - Level Clear
+Celestial Resort A - Huge Mess Key
+Celestial Resort A - Huge Mess
+Celestial Resort A - Hallway Key 2
+Celestial Resort A - Hallway Key 1
+Celestial Resort A - Golden Strawberry
+Celestial Resort A - Front Door Key
+Celestial Resort A - Elevator Shaft
+Celestial Resort A - Crystal Heart
+Celestial Resort A - Cassette

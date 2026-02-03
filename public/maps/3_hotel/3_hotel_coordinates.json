@@ -1,0 +1,219 @@
+{
+  "3_hotel": {
+    "hotel-start": [
+      {
+        "locationId": "Celestial_Resort_A_Front_Door_Key",
+        "x": 0.2777498826078956,
+        "y": 0.5679040582716275
+      },
+      {
+        "locationId": "Celestial_Resort_A_Hallway_Key_1",
+        "x": 0.5742368604710858,
+        "y": 0.4391511972376467
+      },
+      {
+        "locationId": "Celestial_Resort_A_Hallway_Key_2",
+        "x": 0.9140297982404133,
+        "y": 0.43378649469456415
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_s2_Strawberry_1",
+        "x": 0.22720125786163523,
+        "y": 0.8768335459183674
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_s2_Strawberry_2",
+        "x": 0.16928721174004194,
+        "y": 0.4992825255102041
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_s3_Strawberry",
+        "x": 0.3039832285115304,
+        "y": 0.3241124574829932
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_00_a_Strawberry",
+        "x": 0.47562893081761004,
+        "y": 0.6557451105442177
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_00_b_Strawberry",
+        "x": 0.4143081761006289,
+        "y": 0.34281994047619047
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_04_b_Strawberry",
+        "x": 0.7261530398322851,
+        "y": 0.42615327380952384
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_06_a_Strawberry",
+        "x": 0.8553459119496856,
+        "y": 0.6047247023809523
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_07_b_Strawberry",
+        "x": 0.9224318658280922,
+        "y": 0.28329613095238093
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_06_b_Strawberry",
+        "x": 0.82520964360587,
+        "y": 0.4380580357142857
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_06_c_Strawberry",
+        "x": 0.8456498951781971,
+        "y": 0.0349968112244898
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_05_c_Strawberry",
+        "x": 0.7675576519916143,
+        "y": 0.4414593962585034
+      },
+      {
+        "locationId": "Celestial_Resort_A_Golden_Strawberry",
+        "x": 0.0033341007733685897,
+        "y": 0.7975158418198771
+      }
+    ],
+    "hotel-elevator-shaft": [
+      {
+        "locationId": "Celestial_Resort_A_Presidential_Suite_Key",
+        "x": 0.1340375866465352,
+        "y": 0.5475140006280576
+      },
+      {
+        "locationId": "Celestial_Resort_A_Elevator_Shaft",
+        "x": 0.9009873103666298,
+        "y": 0.5968748241489852
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_06_d_Strawberry",
+        "x": 0.657254440497709,
+        "y": 0.06383825389724708
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_04_c_Strawberry",
+        "x": 0.43353627860467664,
+        "y": 0.4635022646268725
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_03_b_Strawberry_1",
+        "x": 0.28883630504047986,
+        "y": 0.8247706062034335
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_03_b_Strawberry_2",
+        "x": 0.24115866398130903,
+        "y": 0.720055144876894
+      },
+      {
+        "locationId": "Celestial_Resort_A_Cassette",
+        "x": 0.00810501992284462,
+        "y": 0.4722285530707508
+      }
+    ],
+    "hotel-huge-mess": [
+      {
+        "locationId": "Celestial_Resort_A_Huge_Mess_Key",
+        "x": 0.3341194968553459,
+        "y": 0.4238899472450176
+      },
+      {
+        "locationId": "Celestial_Resort_A_Huge_Mess",
+        "x": 0.026848013182589243,
+        "y": 0.5099693977506471
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_12_y_Strawberry",
+        "x": 0.8076705964738152,
+        "y": 0.7424691287999954
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_10_y_Strawberry",
+        "x": 0.3907941736023386,
+        "y": 0.7482925409740555
+      },
+      {
+        "locationId": "Celestial_Resort_A_Crystal_Heart",
+        "x": 0.5833174157041325,
+        "y": 0.2464550800364544
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_12_c_Strawberry",
+        "x": 0.7492074931188323,
+        "y": 0.258354204173034
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_11_d_Strawberry",
+        "x": 0.6496734466700125,
+        "y": 0.0905139268781211
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_13_b_Strawberry",
+        "x": 0.9878207284936044,
+        "y": 0.3917496484410058
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_13_x_Strawberry",
+        "x": 0.9034057777078963,
+        "y": 0.6741972792619226
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_08_x_Strawberry",
+        "x": 0.08235488822501547,
+        "y": 0.6485202219145666
+      }
+    ],
+    "hotel-presidential-suite": [
+      {
+        "locationId": "Celestial_Resort_A_Presidential_Suite",
+        "x": 0.039046121593291405,
+        "y": 0.7698784722222223
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_roof03_Strawberry",
+        "x": 0.32625786163522014,
+        "y": 0.11432291666666666
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_roof06_Strawberry_1",
+        "x": 0.6957547169811321,
+        "y": 0.11432291666666666
+      },
+      {
+        "locationId": "Celestial_Resort_A_Room_roof06_Strawberry_2",
+        "x": 0.7879979035639413,
+        "y": 0.4309895833333333
+      },
+      {
+        "locationId": "Celestial_Resort_A_Level_Clear",
+        "x": 0.9462788259958071,
+        "y": 0.2087673611111111
+      }
+    ],
+    "reflection-hollows": [
+      {
+        "locationId": "Reflection_A_Crystal_Heart",
+        "x": 0.2696540880503145,
+        "y": 0.2910442020400942
+      },
+      {
+        "locationId": "Reflection_A_Cassette",
+        "x": 0.031446540880503145,
+        "y": 0.9291044202040094
+      },
+      {
+        "locationId": "Reflection_A_Golden_Strawberry",
+        "x": 0.785377358490566,
+        "y": 0.9911380525255011
+      },
+      {
+        "locationId": "Reflection_A_Level_Clear",
+        "x": 0.9787735849056604,
+        "y": 0.7242949674600366
+      }
+    ]
+  }
+}

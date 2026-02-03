@@ -1,0 +1,16 @@
+{
+  "2_old_site": {
+    "old-site-awake": [
+      {
+        "locationId": "Old_Site_A_Room_end_3c_Strawberry",
+        "x": 0.6695501730103807,
+        "y": 0.403047845232794
+      },
+      {
+        "locationId": "Old_Site_B_Combination_Lock",
+        "x": 0.9550173010380623,
+        "y": 0.922369006976399
+      }
+    ]
+  }
+}

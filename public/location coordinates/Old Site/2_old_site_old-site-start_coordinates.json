@@ -1,0 +1,61 @@
+{
+  "2_old_site": {
+    "old-site-start": [
+      {
+        "locationId": "Old_Site_A_Crystal_Heart",
+        "x": 0.11332179930795848,
+        "y": 0.06479170666154732
+      },
+      {
+        "locationId": "Old_Site_A_Room_1_Strawberry",
+        "x": 0.49567474048442905,
+        "y": 0.343284059640366
+      },
+      {
+        "locationId": "Old_Site_A_Room_d0_Strawberry",
+        "x": 0.42474048442906576,
+        "y": 0.5787739169386319
+      },
+      {
+        "locationId": "Old_Site_A_Room_d3_Strawberry",
+        "x": 0.870242214532872,
+        "y": 0.8460037115249248
+      },
+      {
+        "locationId": "Old_Site_A_Room_d2_Strawberry_1",
+        "x": 0.5882352941176471,
+        "y": 0.6064183784475587
+      },
+      {
+        "locationId": "Old_Site_A_Room_d2_Strawberry_2",
+        "x": 0.6929065743944637,
+        "y": 0.6135854610609842
+      },
+      {
+        "locationId": "Old_Site_A_Cassette",
+        "x": 0.4420415224913495,
+        "y": 0.9524860817815319
+      },
+      {
+        "locationId": "Old_Site_A_Room_d6_Strawberry",
+        "x": 0.24134948096885814,
+        "y": 0.7395213412683177
+      },
+      {
+        "locationId": "Old_Site_A_Room_d1_Strawberry",
+        "x": 0.24394463667820068,
+        "y": 0.6750175977474884
+      },
+      {
+        "locationId": "Old_Site_A_Room_d4_Strawberry",
+        "x": 0.6444636678200693,
+        "y": 0.5337236833685288
+      },
+      {
+        "locationId": "Old_Site_A_Room_d5_Strawberry",
+        "x": 0.8252595155709342,
+        "y": 0.536795290202854
+      }
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "2_old_site": {
+    "old-site-intervention": [
+      {
+        "locationId": "Old_Site_A_Room_4_Strawberry",
+        "x": 0.12332985934263974,
+        "y": 0.5287316419178705
+      },
+      {
+        "locationId": "Old_Site_A_Room_5_Strawberry",
+        "x": 0.028864435165298664,
+        "y": 0.4524734949053223
+      },
+      {
+        "locationId": "Old_Site_A_Room_8_Strawberry",
+        "x": 0.04028254533340712,
+        "y": 0.13049163612447534
+      },
+      {
+        "locationId": "Old_Site_A_Room_9_Strawberry",
+        "x": 0.26103742897347315,
+        "y": 0.2357786696863996
+      },
+      {
+        "locationId": "Old_Site_A_Room_9b_Strawberry",
+        "x": 0.16619757951201883,
+        "y": 0.06549300826226698
+      },
+      {
+        "locationId": "Old_Site_A_Room_10_Strawberry",
+        "x": 0.3183449124778413,
+        "y": 0.3695361766094565
+      },
+      {
+        "locationId": "Old_Site_A_Room_12c_Strawberry",
+        "x": 0.6454144133113154,
+        "y": 0.6996435843573855
+      },
+      {
+        "locationId": "Old_Site_A_Room_12d_Strawberry",
+        "x": 0.763045702022349,
+        "y": 0.9605996699710058
+      }
+    ]
+  }
+}
