@@ -528,6 +528,11 @@ export default function App() {
   });
   const [trackedPlayerSlot] = useState<number>(1); // Track player in slot 1
   const [show, setShow] = useState<boolean>(false);
+
+  const [showMechanics, setShowMechanics] = useState(true);
+
+  const [showKeys, setShowKeys] = useState(true);
+
   useEffect(() => {
     localStorage.setItem("archipelago-url", archipelagoUrl);
   }, [archipelagoUrl]);
@@ -2907,100 +2912,162 @@ filteredLocations.forEach((loc) => {
         </div>
       </div>
 
-      {/* Current Mechanics - Display with proper names */}
-      <div style={{ marginBottom: "30px" }}>
-        <h2>Current Mechanics ({Object.entries(mechanics).filter(([key, value]) => !key.includes('Key') && key !== 'noCondition' && value).length}/{Object.entries(mechanics).filter(([key]) => !key.includes('Key') && key !== 'noCondition').length})</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 8 }}>
-          {Object.entries(mechanics)
-            .filter(([key]) => !key.includes('Key') && key !== 'noCondition')
-            .map(([key, value]) => {
-            const displayName = getMechanicDisplayName(key);
-            
-            return (
-              <div 
-                key={key} 
-                style={{ 
-                  padding: 8, 
-                  background: value ? "#4CAF50" : "#f5f5f5",
-                  color: value ? "white" : "#333",
-                  border: `1px solid ${value ? "#4CAF50" : "#ddd"}`,
-                  borderRadius: "4px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  transition: "all 0.2s"
-                }}
-                onClick={() => {
-                  setMechanics(prev => {
-                    const mechanicKey = key as keyof MechanicsState;
-                    const updated = { ...prev, [mechanicKey]: !prev[mechanicKey] };
-                    logMechanicsChange(prev, updated);
-                    return updated;
-                  });
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "scale(1.02)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "scale(1)";
-                }}
-              >
-                <span>{displayName}</span>
-                <span style={{ fontWeight: "bold" }}>{value ? "✓" : "✗"}</span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      {/* Current Mechanics */}
+<div style={{ marginBottom: "30px" }}>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      cursor: "pointer"
+    }}
+    onClick={() => setShowMechanics(prev => !prev)}
+  >
+    <h2 style={{ margin: 0 }}>
+      Current Mechanics (
+      {Object.entries(mechanics).filter(([key, value]) => !key.includes('Key') && key !== 'noCondition' && value).length}
+      /
+      {Object.entries(mechanics).filter(([key]) => !key.includes('Key') && key !== 'noCondition').length}
+      )
+    </h2>
+
+    <span style={{ fontSize: "1.5rem" }}>
+      {showMechanics ? "▼" : "▶"}
+    </span>
+  </div>
+
+  {showMechanics && (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+        gap: 8,
+        marginTop: 12
+      }}
+    >
+      {Object.entries(mechanics)
+        .filter(([key]) => !key.includes('Key') && key !== 'noCondition')
+        .map(([key, value]) => {
+          const displayName = getMechanicDisplayName(key);
+
+          return (
+            <div
+              key={key}
+              style={{
+                padding: 8,
+                background: value ? "#4CAF50" : "#f5f5f5",
+                color: value ? "white" : "#333",
+                border: `1px solid ${value ? "#4CAF50" : "#ddd"}`,
+                borderRadius: "4px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                cursor: "pointer",
+                transition: "all 0.2s"
+              }}
+              onClick={() => {
+                setMechanics(prev => {
+                  const mechanicKey = key as keyof MechanicsState;
+                  const updated = { ...prev, [mechanicKey]: !prev[mechanicKey] };
+                  logMechanicsChange(prev, updated);
+                  return updated;
+                });
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.02)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+              }}
+            >
+              <span>{displayName}</span>
+              <span style={{ fontWeight: "bold" }}>
+                {value ? "✓" : "✗"}
+              </span>
+            </div>
+          );
+        })}
+    </div>
+  )}
+</div>
 
       {/* Current Keys - Display key toggles */}
       <div style={{ marginBottom: "30px" }}>
-        <h2>Current Keys ({Object.entries(mechanics).filter(([key, value]) => key.includes('Key') && value).length}/{Object.entries(mechanics).filter(([key]) => key.includes('Key')).length})</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: 8 }}>
-          {Object.entries(mechanics)
-            .filter(([key]) => key.includes('Key'))
-            .sort(([a], [b]) => a.localeCompare(b))
-            .map(([key, value]) => {
-            const displayName = getMechanicDisplayName(key);
-            
-            return (
-              <div 
-                key={key} 
-                style={{ 
-                  padding: 8, 
-                  background: value ? "#2196F3" : "#f5f5f5",
-                  color: value ? "white" : "#333",
-                  border: `1px solid ${value ? "#2196F3" : "#ddd"}`,
-                  borderRadius: "4px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  transition: "all 0.2s",
-                  whiteSpace: "pre-line"
-                }}
-                onClick={() => {
-                  setMechanics(prev => {
-                    const mechanicKey = key as keyof MechanicsState;
-                    const updated = { ...prev, [mechanicKey]: !prev[mechanicKey] };
-                    logMechanicsChange(prev, updated);
-                    return updated;
-                  });
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "scale(1.02)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "scale(1)";
-                }}
-              >
-                <span>{displayName}</span>
-                <span style={{ fontWeight: "bold" }}>{value ? "✓" : "✗"}</span>
-              </div>
-            );
-          })}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            cursor: "pointer"
+          }}
+          onClick={() => setShowKeys(prev => !prev)}
+        >
+          <h2 style={{ margin: 0 }}>
+            Current Keys (
+            {Object.entries(mechanics).filter(([key, value]) => key.includes('Key') && value).length}
+            /
+            {Object.entries(mechanics).filter(([key]) => key.includes('Key')).length}
+            )
+          </h2>
+
+          <span style={{ fontSize: "1.5rem" }}>
+            {showKeys ? "▼" : "▶"}
+          </span>
         </div>
+
+        {showKeys && (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+              gap: 8,
+              marginTop: 12
+            }}
+          >
+            {Object.entries(mechanics)
+              .filter(([key]) => key.includes('Key'))
+              .sort(([a], [b]) => a.localeCompare(b))
+              .map(([key, value]) => {
+                const displayName = getMechanicDisplayName(key);
+
+                return (
+                  <div
+                    key={key}
+                    style={{
+                      padding: 8,
+                      background: value ? "#2196F3" : "#f5f5f5",
+                      color: value ? "white" : "#333",
+                      border: `1px solid ${value ? "#2196F3" : "#ddd"}`,
+                      borderRadius: "4px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      cursor: "pointer",
+                      transition: "all 0.2s",
+                      whiteSpace: "pre-line"
+                    }}
+                    onClick={() => {
+                      setMechanics(prev => {
+                        const mechanicKey = key as keyof MechanicsState;
+                        const updated = { ...prev, [mechanicKey]: !prev[mechanicKey] };
+                        logMechanicsChange(prev, updated);
+                        return updated;
+                      });
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "scale(1.02)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "scale(1)";
+                    }}
+                  >
+                    <span>{displayName}</span>
+                    <span style={{ fontWeight: "bold" }}>{value ? "✓" : "✗"}</span>
+                  </div>
+                );
+              })}
+          </div>
+        )}
       </div>
 
       {/* Filters - Only show in list view */}
