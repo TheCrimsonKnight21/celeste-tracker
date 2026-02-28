@@ -882,43 +882,8 @@ const { isConnected, send, socket } = useWebSocket({
     
     // Send connect message immediately - but only if socket is actually open
     setTimeout(() => {
-      if (socket?.readyState === WebSocket.OPEN) {
-        send([
-          {
-            cmd: "Connect",
-            game: "Celeste (Open World)",
-            name: slotName,
-            password: "",
-            tags: ["Tracker"],
-            items_handling: 7,
-            uuid: getClientUUID(),
-            version: { major: 0, minor: 5, build: 0, class: "Version" },
-          },
-        ]);
-        console.log("Connect message sent to Archipelago");
-        
-        // Request initial data after connecting
-        setTimeout(() => {
-          send([{ cmd: "GetDataPackage" }]);
-          
-          // Use Set command to watch player slot 1's data
-          setTimeout(() => {
-            send([{ 
-              cmd: "Set",
-              key: "_read_slot_data_1",
-              default: {},
-              want_reply: true,
-              operations: [{"operation": "default"}]
-            }]);
-            
-            // Also try to sync directly
-            send([{ cmd: "Sync" }]);
-            addLog("🔄 Auto-syncing with server");
-          }, 1000);
-        }, 500);
-      } else {
-        console.log("Socket not open when trying to send Connect message");
-      }
+     console.log("✅ WebSocket opened successfully");
+    addLog("✅ WebSocket connected to Archipelago");
     }, 100); // Small delay to ensure socket is ready
   },
   onClose: (event) => {
@@ -996,6 +961,53 @@ const sendAPMessage = (message: any) => {
       }
     }
 
+    
+    if (msg.cmd === "RoomInfo") {
+      console.log("RoomInfo message:", msg);
+      if (socket?.readyState === WebSocket.OPEN) {
+        console.log("RoomInfo received → sending Connect");
+
+        send([{
+          cmd: "Connect",
+          game: "Celeste (Open World)",
+          name: slotName,
+          password: "",
+          tags: ["Tracker"],
+          items_handling: 7,
+          uuid: getClientUUID(),
+          version: { major: 0, minor: 5, build: 0, class: "Version" },
+        }]);
+      }
+      // RoomInfo contains slot_data for all players
+      if (msg.slot_data && typeof msg.slot_data === 'object') {
+        // Get slot data for tracked player (slot 1)
+        const playerSlotData = msg.slot_data[trackedPlayerSlot];
+        
+        if (playerSlotData) {
+          console.log("Player slot data:", playerSlotData);
+          
+          processSlotData(
+            playerSlotData,
+            {
+              setSelectedGoal,
+              setLockGoalArea,
+              setIncludeBSides,
+              setIncludeCSides,
+              setIncludeGoldenStrawberries,
+              setIncludeCore,
+              setIncludeFarewell,
+              setIncludeCheckpoints,
+              setBinosanity,
+              setKeysanity,
+              setGemsanity,
+              setCarsanity,
+              setGoalStrawberryRequirement
+            },
+            addLog
+          );
+        }
+      }
+      
     if (msg.cmd === "ItemInfo") {
       // Handle initial items that were already received
       console.log("ItemInfo:", msg);
@@ -1051,39 +1063,6 @@ const sendAPMessage = (message: any) => {
         }
       }
     }
-    
-    if (msg.cmd === "RoomInfo") {
-      console.log("RoomInfo message:", msg);
-      
-      // RoomInfo contains slot_data for all players
-      if (msg.slot_data && typeof msg.slot_data === 'object') {
-        // Get slot data for tracked player (slot 1)
-        const playerSlotData = msg.slot_data[trackedPlayerSlot];
-        
-        if (playerSlotData) {
-          console.log("Player slot data:", playerSlotData);
-          
-          processSlotData(
-            playerSlotData,
-            {
-              setSelectedGoal,
-              setLockGoalArea,
-              setIncludeBSides,
-              setIncludeCSides,
-              setIncludeGoldenStrawberries,
-              setIncludeCore,
-              setIncludeFarewell,
-              setIncludeCheckpoints,
-              setBinosanity,
-              setKeysanity,
-              setGemsanity,
-              setCarsanity,
-              setGoalStrawberryRequirement
-            },
-            addLog
-          );
-        }
-      }
       
       // Handle checked locations from RoomInfo
       if (msg.checked_locations && Array.isArray(msg.checked_locations)) {
