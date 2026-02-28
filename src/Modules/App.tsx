@@ -522,9 +522,12 @@ export default function App() {
   const [slotName, setSlotName] = useState<string>(() => {
     return localStorage.getItem("archipelago-slot-name") || "Player1";
   });
-  
+  /* ---------- Archipelago Password ---------- */
+  const [password, setPassword] = useState<string>(() => {
+    return localStorage.getItem("archipelago-password") || "";
+  });
   const [trackedPlayerSlot] = useState<number>(1); // Track player in slot 1
-
+  const [show, setShow] = useState<boolean>(false);
   useEffect(() => {
     localStorage.setItem("archipelago-url", archipelagoUrl);
   }, [archipelagoUrl]);
@@ -532,6 +535,10 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("archipelago-slot-name", slotName);
   }, [slotName]);
+
+  useEffect(() => {
+    localStorage.setItem("archipelago-password", password);
+  }, [password]);
 
   // Extract unique values for filters from collectible locations only
   const collectibleLocationDefs = LOCATIONS.filter(isCollectibleLocationDef);
@@ -971,7 +978,7 @@ const sendAPMessage = (message: any) => {
           cmd: "Connect",
           game: "Celeste (Open World)",
           name: slotName,
-          password: "",
+          password: password,
           tags: ["Tracker"],
           items_handling: 7,
           uuid: getClientUUID(),
@@ -2219,18 +2226,28 @@ filteredLocations.forEach((loc) => {
         border: '1px solid rgba(139, 92, 246, 0.3)',
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
       }}>
-        <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+        <div
+          style={{
+            display: 'flex',
+            gap: '1.5rem',
+            flexWrap: 'wrap',
+            alignItems: 'center'
+          }}
+        >
           {/* Server URL */}
           <div style={{ flex: '1 1 400px', minWidth: '300px' }}>
-            <label style={{ 
-              display: 'block', 
-              marginBottom: '0.75rem', 
-              fontWeight: '600',
-              color: 'var(--text-primary)',
-              fontSize: '1.05em'
-            }}>
+            <label
+              style={{
+                display: 'block',
+                marginBottom: '0.75rem',
+                fontWeight: '600',
+                color: 'var(--text-primary)',
+                fontSize: '1.05em'
+              }}
+            >
               🌐 Server URL:
             </label>
+
             <input
               type="text"
               value={archipelagoUrl}
@@ -2244,78 +2261,147 @@ filteredLocations.forEach((loc) => {
                 fontFamily: 'monospace',
                 fontSize: '0.95em',
                 background: 'var(--surface)',
-                color: 'var(--text-primary)',
-                transition: 'all 0.3s ease'
+                color: 'var(--text-primary)'
               }}
             />
-            <div style={{ 
-              fontSize: '0.85em', 
-              color: 'var(--text-muted)', 
-              marginTop: '0.5rem',
-              fontStyle: 'italic'
-            }}>
+
+            <div
+              style={{
+                fontSize: '0.85em',
+                color: 'var(--text-muted)',
+                marginTop: '0.5rem',
+                fontStyle: 'italic'
+              }}
+            >
               💡 Default: ws://localhost:38281
             </div>
           </div>
 
           {/* Slot Name */}
           <div style={{ flex: '1 1 300px', minWidth: '250px' }}>
-            <label style={{ 
-              display: 'block', 
-              marginBottom: '0.75rem', 
-              fontWeight: '600',
-              color: 'var(--text-primary)',
-              fontSize: '1.05em'
-            }}>
+            <label
+              style={{
+                display: 'block',
+                marginBottom: '0.75rem',
+                fontWeight: '600',
+                color: 'var(--text-primary)',
+                fontSize: '1.05em'
+              }}
+            >
               👤 Slot Name:
             </label>
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-              <input
-                type="text"
-                value={slotName}
-                onChange={(e) => setSlotName(e.target.value)}
-                placeholder="Player1"
-                style={{
-                  flex: '1',
-                  padding: '0.75rem 1rem',
-                  border: '2px solid var(--border-color)',
-                  borderRadius: '8px',
-                  fontSize: '0.95em',
-                  background: 'var(--surface)',
-                  color: 'var(--text-primary)',
-                  transition: 'all 0.3s ease'
-                }}
-              />
-              <button
-                onClick={() => {
-                  const currentUrl = archipelagoUrl;
-                  setArchipelagoUrl("");
-                  setTimeout(() => setArchipelagoUrl(currentUrl), 100);
-                }}
-                style={{
-                  padding: '0.75rem 1.5rem',
-                  background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '8px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
-                  whiteSpace: 'nowrap'
-                }}
-              >
-                🔄 Reconnect
-              </button>
-            </div>
-            <div style={{ 
-              fontSize: '0.85em', 
-              color: 'var(--text-muted)', 
-              marginTop: '0.5rem',
-              fontStyle: 'italic'
-            }}>
+
+            <input
+              type="text"
+              value={slotName}
+              onChange={(e) => setSlotName(e.target.value)}
+              placeholder="Player1"
+              style={{
+                width: '100%',
+                padding: '0.75rem 1rem',
+                border: '2px solid var(--border-color)',
+                borderRadius: '8px',
+                fontSize: '0.95em',
+                background: 'var(--surface)',
+                color: 'var(--text-primary)'
+              }}
+            />
+
+            <div
+              style={{
+                fontSize: '0.85em',
+                color: 'var(--text-muted)',
+                marginTop: '0.5rem',
+                fontStyle: 'italic'
+              }}
+            >
               💡 Your player/slot name
             </div>
           </div>
+
+          {/* Server Password */}
+          <div style={{ flex: '1 1 300px', minWidth: '250px' }}>
+            <label
+              style={{
+                display: 'block',
+                marginBottom: '0.75rem',
+                fontWeight: '600',
+                color: 'var(--text-primary)',
+                fontSize: '1.05em'
+              }}
+            >
+              🔑 Server Password:
+            </label>
+
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <input
+                type={show ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={{
+                  flex: 1,
+                  padding: '0.75rem 1rem',
+                  border: '2px solid var(--border-color)',
+                  borderRadius: '8px',
+                  fontFamily: 'monospace',
+                  fontSize: '0.95em',
+                  background: 'var(--surface)',
+                  color: 'var(--text-primary)'
+                }}
+              />
+               
+              <button
+                onClick={() => setShow(!show)}
+                style={{
+                  padding: '0.75rem 1rem',
+                  borderRadius: '8px',
+                  border: '2px solid var(--border-color)',
+                  background: 'var(--surface)',
+                  cursor: 'pointer',
+                  fontWeight: 600
+                }}
+              >
+                {show ? 'Hide' : 'Show'}
+              </button>
+              
+            </div>
+            <div
+              style={{
+                fontSize: '0.85em',
+                color: 'var(--text-muted)',
+                marginTop: '0.5rem',
+                fontStyle: 'italic'
+              }}
+            >
+              💡 Optional, only if your server has a password
+            </div>
+          </div>
+
+          {/* Reconnect Button */}
+          <div style={{ marginLeft: 'auto' }}>
+            <button
+              onClick={() => {
+                const currentUrl = archipelagoUrl;
+                setArchipelagoUrl('');
+                setTimeout(() => setArchipelagoUrl(currentUrl), 100);
+              }}
+              style={{
+                padding: '0.75rem 1.75rem',
+                background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                height: '48px'
+              }}
+            >
+              🔄 Reconnect
+            </button>
+            
+          </div>
+          
         </div>
       </div>
 
