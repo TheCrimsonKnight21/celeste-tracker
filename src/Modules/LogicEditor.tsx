@@ -17,10 +17,9 @@ export default function LogicEditor({ logic, onChange, onRemove, mechanics = {},
     const hasMechanic = logic.key === "noCondition" ? true : (logic.key ? mechanics[logic.key] || false : false);
 
     // Get display name for the selected logic key
-    let displayName = logic.key || "Select a mechanic...";
+    
     for (const mapping of Object.values(MECHANIC_MAPPINGS)) {
       if (mapping.logicKey === logic.key) {
-        displayName = mapping.display;
         break;
       }
     }
