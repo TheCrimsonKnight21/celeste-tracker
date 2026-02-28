@@ -31,8 +31,8 @@ export function DebugOverlay({
     return { key, displayName, value };
   });
   // Filter mechanics to remove 'has' prefix
-  const filteredMechanics = Object.entries(mechanics)
-    .filter(([key]) => !key.startsWith('has'));
+  // const filteredMechanics = Object.entries(mechanics)
+  //   .filter(([key]) => !key.startsWith('has'));
 
   return (
     <div

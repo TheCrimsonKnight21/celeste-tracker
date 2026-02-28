@@ -7,26 +7,26 @@ interface CelesteLevelData {
 }
 
 // simple patterns used when JSON names omit chapter prefix for keys
-const KEY_PATTERNS: { pattern: string; logicKey: string }[] = [
-  { pattern: 'front door key', logicKey: 'hasFrontDoorKey' },
-  { pattern: 'hallway key 1', logicKey: 'hasHallwayKey1' },
-  { pattern: 'hallway key 2', logicKey: 'hasHallwayKey2' },
-  { pattern: 'huge mess key', logicKey: 'hasHugeMessKey' },
-  { pattern: 'presidential suite key', logicKey: 'hasPresidentialSuiteKey' },
-  { pattern: 'entrance key', logicKey: 'hasEntranceKey' },
-  { pattern: 'depths key', logicKey: 'hasDepthsKey' },
-  { pattern: 'search key 1', logicKey: 'hasSearchKey1' },
-  { pattern: 'search key 2', logicKey: 'hasSearchKey2' },
-  { pattern: 'search key 3', logicKey: 'hasSearchKey3' },
-  { pattern: 'central chamber key 1', logicKey: 'hasCentralChamberKey1' },
-  { pattern: 'central chamber key 2', logicKey: 'hasCentralChamberKey2' },
-  { pattern: '2500 m key', logicKey: 'has2500MKey' },
-  { pattern: 'power source key 1', logicKey: 'hasPowerSourceKey1' },
-  { pattern: 'power source key 2', logicKey: 'hasPowerSourceKey2' },
-  { pattern: 'power source key 3', logicKey: 'hasPowerSourceKey3' },
-  { pattern: 'power source key 4', logicKey: 'hasPowerSourceKey4' },
-  { pattern: 'power source key 5', logicKey: 'hasPowerSourceKey5' },
-];
+// const KEY_PATTERNS: { pattern: string; logicKey: string }[] = [
+//   { pattern: 'front door key', logicKey: 'hasFrontDoorKey' },
+//   { pattern: 'hallway key 1', logicKey: 'hasHallwayKey1' },
+//   { pattern: 'hallway key 2', logicKey: 'hasHallwayKey2' },
+//   { pattern: 'huge mess key', logicKey: 'hasHugeMessKey' },
+//   { pattern: 'presidential suite key', logicKey: 'hasPresidentialSuiteKey' },
+//   { pattern: 'entrance key', logicKey: 'hasEntranceKey' },
+//   { pattern: 'depths key', logicKey: 'hasDepthsKey' },
+//   { pattern: 'search key 1', logicKey: 'hasSearchKey1' },
+//   { pattern: 'search key 2', logicKey: 'hasSearchKey2' },
+//   { pattern: 'search key 3', logicKey: 'hasSearchKey3' },
+//   { pattern: 'central chamber key 1', logicKey: 'hasCentralChamberKey1' },
+//   { pattern: 'central chamber key 2', logicKey: 'hasCentralChamberKey2' },
+//   { pattern: '2500 m key', logicKey: 'has2500MKey' },
+//   { pattern: 'power source key 1', logicKey: 'hasPowerSourceKey1' },
+//   { pattern: 'power source key 2', logicKey: 'hasPowerSourceKey2' },
+//   { pattern: 'power source key 3', logicKey: 'hasPowerSourceKey3' },
+//   { pattern: 'power source key 4', logicKey: 'hasPowerSourceKey4' },
+//   { pattern: 'power source key 5', logicKey: 'hasPowerSourceKey5' },
+// ];
 interface Level {
   name: string;
   display_name: string;

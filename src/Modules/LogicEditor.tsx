@@ -47,7 +47,7 @@ export default function LogicEditor({ logic, onChange, onRemove, mechanics = {},
             }}
           >
             <option value="">Select a mechanic...</option>
-            {Object.entries(MECHANIC_MAPPINGS).map(([apKey, mapping]) => (
+            {Object.entries(MECHANIC_MAPPINGS).map(([, mapping]) => (
               <option key={mapping.logicKey} value={mapping.logicKey}>
                 {mapping.display}
               </option>
