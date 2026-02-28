@@ -12,196 +12,29 @@ import { LocationDebugger } from "./LocationDebugger";
 import { LocationDiagnostic } from "./LocationDiagnostic";
 import {useWebSocket }from "../Archipelago/useWebSocket";
 import { MapTracker } from "./MapTracker";
+import {
+  simpleStringHash,
+  getAreaName,
+  extractSideFromId,
+  extractTypeFromDisplayName,
+  getMechanicKeyFromAPName,
+  enhanceAPNameMatching,
+  getClientUUID,
+  getRequiredKeysFromLogic
+} from "../utils/helpers";
+import { processSlotData } from "../utils/slotDataProcessor";
 
 /* ===============================
-   Types
+   Types & Local Helpers
 ================================ */
 
 type APMessage = any;
 // let apSocket: WebSocket | null = null;
 let pendingReceivedItems: number[] = [];
 
-/* ===============================
-   Helpers
-================================ */
-
-function simpleStringHash(str: string): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // Convert to 32-bit integer
-  }
-  return Math.abs(hash) % 1000000; // Limit to reasonable range
-}
-
-// Key mappings constant for faster lookup
-const KEY_MAPPINGS = [
-  { pattern: 'front door key', logicKey: 'hasFrontDoorKey' },
-  { pattern: 'hallway key 1', logicKey: 'hasHallwayKey1' },
-  { pattern: 'hallway key 2', logicKey: 'hasHallwayKey2' },
-  { pattern: 'huge mess key', logicKey: 'hasHugeMessKey' },
-  { pattern: 'presidential suite key', logicKey: 'hasPresidentialSuiteKey' },
-  { pattern: 'entrance key', logicKey: 'hasEntranceKey' },
-  { pattern: 'depths key', logicKey: 'hasDepthsKey' },
-  { pattern: 'search key 1', logicKey: 'hasSearchKey1' },
-  { pattern: 'search key 2', logicKey: 'hasSearchKey2' },
-  { pattern: 'search key 3', logicKey: 'hasSearchKey3' },
-  { pattern: 'central chamber key 1', logicKey: 'hasCentralChamberKey1' },
-  { pattern: 'central chamber key 2', logicKey: 'hasCentralChamberKey2' },
-  { pattern: '2500 m key', logicKey: 'has2500MKey' },
-  { pattern: 'power source key 1', logicKey: 'hasPowerSourceKey1' },
-  { pattern: 'power source key 2', logicKey: 'hasPowerSourceKey2' },
-  { pattern: 'power source key 3', logicKey: 'hasPowerSourceKey3' },
-  { pattern: 'power source key 4', logicKey: 'hasPowerSourceKey4' },
-  { pattern: 'power source key 5', logicKey: 'hasPowerSourceKey5' },
-] as const;
-
-function getMechanicKeyFromAPName(apName: string): keyof MechanicsState | null {
-  console.log(`Looking for mapping for AP item: "${apName}"`);
-  
-  // First, try exact match in MECHANIC_MAPPINGS
-  if (MECHANIC_MAPPINGS[apName]) {
-    console.log(`Exact match found: "${apName}" -> "${MECHANIC_MAPPINGS[apName].logicKey}"`);
-    return MECHANIC_MAPPINGS[apName].logicKey as keyof MechanicsState;
-  }
-  
-  // Try to find a partial match - check both directions
-  for (const [apKey, mapping] of Object.entries(MECHANIC_MAPPINGS)) {
-    if (apName.includes(apKey) || apKey.includes(apName)) {
-      console.log(`Partial match found: "${apName}" matches "${apKey}" -> "${mapping.logicKey}"`);
-      return mapping.logicKey as keyof MechanicsState;
-    }
-  }
-  
-  // Special handling for keys - try to match key names without location prefixes
-  if (apName.toLowerCase().includes('key')) {
-    for (const mapping of KEY_MAPPINGS) {
-      if (apName.toLowerCase().includes(mapping.pattern)) {
-        console.log(`Key pattern match found: "${apName}" matches "${mapping.pattern}" -> "${mapping.logicKey}"`);
-        return mapping.logicKey as keyof MechanicsState;
-      }
-    }
-  }
-  
-  // Handle special cases
-  if (apName.includes("Dash Refill")) {
-    return "dashrefills" as keyof MechanicsState;
-  }
-  
-  // Check if it's a crystal heart (they all map to the same logic key)
-  if (apName.includes("Crystal Heart")) {
-    return "crystalheart" as keyof MechanicsState;
-  }
-  
-  console.log(`No mapping found for "${apName}"`);
-  return null;
-}
-
-const AREA_NAMES = [
-  "Prologue",
-  "Forsaken City",
-  "Old Site",
-  "Celestial Resort",
-  "Golden Ridge",
-  "Mirror Temple",
-  "Reflection",
-  "Summit",
-  "Epilogue",
-  "Core",
-  "Farewell"
-];
-
-function getAreaName(chapter: number): string {
-  return AREA_NAMES[chapter] ?? `Chapter ${chapter}`;
-}
-
-function getClientUUID(): string {
-  const key = "ap-client-uuid";
-  let uuid = localStorage.getItem(key);
-  if (!uuid) {
-    uuid = crypto.randomUUID();
-    localStorage.setItem(key, uuid);
-  }
-  return uuid;
-}
-
-// Helper to extract required keys from logic node
-function getRequiredKeysFromLogic(logic: any): string[] {
-  const keys: string[] = [];
-  
-  if (logic.type === "has") {
-    keys.push(logic.key);
-  } else if (logic.type === "and" || logic.type === "or") {
-    if (logic.nodes) {
-      logic.nodes.forEach((node: any) => {
-        keys.push(...getRequiredKeysFromLogic(node));
-      });
-    }
-  }
-  
-  return keys;
-}
-
-// Helper to extract side from location ID (e.g., "Forsaken City A - Room 1" → "A")
-function extractSideFromId(id: string): string | undefined {
-  // Try with spaces first (for display names)
-  const spaceMatch = id.match(/(\s+)([ABC])(\s+-\s+)/);
-  if (spaceMatch && spaceMatch[2]) {
-    return spaceMatch[2];
-  }
-  
-  // Try with underscores (for cleaned IDs)
-  const underscoreMatch = id.match(/_([ABC])_/);
-  if (underscoreMatch && underscoreMatch[1]) {
-    return underscoreMatch[1];
-  }
-  
-  // Check for patterns like "Old Site A" or "Celestial Resort B"
-  const chapterMatch = id.match(/([ABC])\s+-\s+/);
-  if (chapterMatch && chapterMatch[1]) {
-    return chapterMatch[1];
-  }
-  
-  return undefined;
-}
-
-// Checkpoint names constant for faster lookup
-const CHECKPOINT_NAMES = [
-  "shrine", "combination lock", "dream altar", "crossing", "chasm", "intervention", "awake",
-  "contraption", "scrap pit", "elevator shaft", "huge mess", "presidential suite", "front door",
-  "hallway", "staff quarters", "rooftop", "library", "old trail", "cliff face",
-  "stepping stones", "gusty canyon", "eye of the storm", "search", "depths", "rescue",
-  "unravelling", "mix master", "central chamber", "through the mirror", "hollows",
-  "resolution", "reflection", "reprieve", "rock bottom", "hot and cold", "heart of the mountain",
-  "into the core", "heartbeat", "burning or freezing", "farewell", "event horizon",
-  "determination", "power source", "reconciliation", "remembered", "singular", "stubbornness"
-] as const;
-
-// Helper to extract type from location display name
-function extractTypeFromDisplayName(displayName: string): string | undefined {
-  const lowerName = displayName.toLowerCase();
-  
-  // Check for golden strawberry BEFORE regular strawberry
-  if (lowerName.includes("golden strawberry") || lowerName.includes("winged golden")) return "Golden Strawberry";
-  if (lowerName.includes("strawberry")) return "Strawberry";
-  if (lowerName.includes("cassette")) return "Cassette";
-  if (lowerName.includes("heart")) return "Crystal Heart";
-  if (lowerName.includes("key")) return "Key";
-  if (lowerName.includes("moon berry")) return "Moon Berry";
-  if (lowerName.includes("raspberry")) return "Raspberry";
-  if (lowerName.includes("gem")) return "Gem";
-  if (lowerName.includes("core") && lowerName.includes("crystal")) return "Crystal Heart";
-  if (lowerName.includes("level clear")) return "Level Clear";
-  
-  // Check for checkpoints
-  if (/\d+\s*m\b/i.test(displayName)) return "Checkpoint"; // e.g., "500 M", "1000 M"
-  if (CHECKPOINT_NAMES.some(cp => lowerName.includes(cp))) return "Checkpoint";
-  
-  return undefined;
-}
-
-// Helper to check if location is a collectible type we want to display
+/**
+ * Check if a location is a collectible (displayable) type
+ */
 function isCollectibleLocationDef(loc: LocationDef): boolean {
   const type = extractTypeFromDisplayName(loc.displayName);
   return type !== undefined;
@@ -212,7 +45,9 @@ function isCollectibleLocationState(loc: LocationState): boolean {
   return type !== undefined;
 }
 
-// Helper to get mechanic display name
+/**
+ * Get display name for a mechanic from its logic key
+ */
 function getMechanicDisplayName(logicKey: string): string {
   for (const mapping of Object.values(MECHANIC_MAPPINGS)) {
     if (mapping.logicKey === logicKey) {
@@ -225,199 +60,7 @@ function getMechanicDisplayName(logicKey: string): string {
   return formatted.charAt(0).toUpperCase() + formatted.slice(1);
 }
 
-// Helper to enhance AP name matching
-function enhanceAPNameMatching(apName: string): string {
-  let enhanced = apName;
-  
-  // Handle Golden Ridge naming differences
-  if (apName.includes("Golden Ridge A - Room a-")) {
-    enhanced = apName.replace("Golden Ridge A - Room a-", "Golden Ridge A - ");
-  }
-  if (apName.includes("Golden Ridge A - Room b-")) {
-    enhanced = apName.replace("Golden Ridge A - Room b-", "Golden Ridge A - ");
-  }
-  if (apName.includes("Golden Ridge A - Room c-")) {
-    enhanced = apName.replace("Golden Ridge A - Room c-", "Golden Ridge A - ");
-  }
-  if (apName.includes("Golden Ridge A - Room d-")) {
-    enhanced = apName.replace("Golden Ridge A - Room d-", "Golden Ridge A - ");
-  }
-  
-  // Handle Gem locations
-  if (apName.includes("The Summit A - Gem")) {
-    const gemNum = apName.match(/Gem (\d+)/)?.[1];
-    if (gemNum) {
-      enhanced = `The Summit A - Gem ${gemNum}`;
-    }
-  }
-  
-  // Handle room naming patterns
-  enhanced = enhanced.replace(/Room\s+/g, "Room ");
-  enhanced = enhanced.replace(/\s+-\s+/g, " - ");
-  
-  return enhanced;
-}
 
-// Goal mapping constant for slot data processing
-const GOAL_MAPPING: Record<string, string> = {
-  '0': 'summit-a', '0a': 'summit-a',
-  '1': 'summit-b', '1b': 'summit-b',
-  '2': 'summit-c', '2c': 'summit-c',
-  '3': 'core-a', '3a': 'core-a',
-  '4': 'core-b', '4b': 'core-b',
-  '5': 'core-c', '5c': 'core-c',
-  '6': 'summit-a', '6a': 'summit-a',
-  '7': 'core-a', '7a': 'summit-a',
-  '8': 'farewell', '8a': 'farewell',
-  '9': 'farewell-golden', '9g': 'farewell-golden',
-  '10': 'farewell', '10a': 'farewell',
-  'the_summit_a': 'summit-a',
-  'the_summit_b': 'summit-b',
-  'the_summit_c': 'summit-c',
-  'the_core_a': 'core-a',
-  'the_core_b': 'core-b',
-  'the_core_c': 'core-c',
-  'summit_a': 'summit-a',
-  'summit_b': 'summit-b',
-  'summit_c': 'summit-c',
-  'core_a': 'core-a',
-  'core_b': 'core-b',
-  'core_c': 'core-c',
-  'empty_space': 'empty-space',
-  'farewell': 'farewell',
-  'farewell_golden': 'farewell-golden'
-} as const;
-
-// Helper to parse boolean/numeric values from slot_data
-function parseBool(value: any): boolean {
-  if (typeof value === 'boolean') return value;
-  if (typeof value === 'number') return value !== 0;
-  if (typeof value === 'string') return value === 'true' || value === '1';
-  return false;
-}
-
-// Helper to parse farewell value
-function parseFarewellValue(value: any): boolean {
-  if (typeof value === 'boolean') return value;
-  if (typeof value === 'number') return value > 0;
-  if (typeof value === 'string') {
-    return value !== 'none' && value !== '0' && value !== '';
-  }
-  return false;
-}
-
-// Helper function to process slot data settings
-function processSlotData(
-  slotData: any,
-  setters: {
-    setSelectedGoal: (goal: string) => void;
-    setLockGoalArea: (lock: boolean) => void;
-    setIncludeBSides: (include: boolean) => void;
-    setIncludeCSides: (include: boolean) => void;
-    setIncludeGoldenStrawberries: (include: boolean) => void;
-    setIncludeCore: (include: boolean) => void;
-    setIncludeFarewell: (include: boolean) => void;
-    setIncludeCheckpoints: (include: boolean) => void;
-    setBinosanity: (val: boolean) => void;
-    setKeysanity: (val: boolean) => void;
-    setGemsanity: (val: boolean) => void;
-    setCarsanity: (val: boolean) => void;
-    setGoalStrawberryRequirement: (req: number) => void;
-  },
-  addLog: (message: string) => void
-) {
-  // Apply goal setting
-  if (slotData.goal_area !== undefined) {
-    const goalValue = String(slotData.goal_area).toLowerCase().replace(/-/g, '_');
-    const mappedGoal = GOAL_MAPPING[goalValue];
-    if (mappedGoal) {
-      setters.setSelectedGoal(mappedGoal);
-      addLog(`🎯 Server: Set goal to ${mappedGoal}`);
-    }
-  }
-
-  // Apply lock_goal_area setting
-  if (slotData.lock_goal_area !== undefined) {
-    const lockVal = parseBool(slotData.lock_goal_area);
-    setters.setLockGoalArea(lockVal);
-    addLog(`🔒 Server: Goal area lock ${lockVal ? 'enabled' : 'disabled'}`);
-  }
-
-  // Apply other settings
-  if (slotData.include_b_sides !== undefined || slotData.include_c_sides !== undefined) {
-    const includeBSides = parseBool(slotData.include_b_sides);
-    const includeCSides = parseBool(slotData.include_c_sides);
-    setters.setIncludeBSides(includeBSides);
-    setters.setIncludeCSides(includeCSides);
-    addLog(`⚙️ Server: B sides ${includeBSides ? 'enabled' : 'disabled'}, C sides ${includeCSides ? 'enabled' : 'disabled'}`);
-  }
-
-  if (slotData.include_goldens !== undefined) {
-    const includeGoldens = parseBool(slotData.include_goldens);
-    setters.setIncludeGoldenStrawberries(includeGoldens);
-    addLog(`⚙️ Server: Goldens ${includeGoldens ? 'enabled' : 'disabled'}`);
-  }
-
-  if (slotData.include_core !== undefined) {
-    const includeCoreVal = parseBool(slotData.include_core);
-    setters.setIncludeCore(includeCoreVal);
-    addLog(`⚙️ Server: Core ${includeCoreVal ? 'enabled' : 'disabled'}`);
-  }
-
-  if (slotData.include_farewell !== undefined) {
-    const includeFarewellVal = parseFarewellValue(slotData.include_farewell);
-    setters.setIncludeFarewell(includeFarewellVal);
-    addLog(`⚙️ Server: Farewell ${includeFarewellVal ? 'enabled' : 'disabled'}`);
-  }
-
-  if (slotData.checkpointsanity !== undefined) {
-    const checkpointsanityVal = parseBool(slotData.checkpointsanity);
-    setters.setIncludeCheckpoints(checkpointsanityVal);
-    addLog(`⚙️ Server: Checkpointsanity ${checkpointsanityVal ? 'enabled' : 'disabled'}`);
-  }
-
-  // additional sanity toggles
-  if (slotData.binosanity !== undefined) {
-    const val = parseBool(slotData.binosanity);
-    setters.setBinosanity(val);
-    addLog(`⚙️ Server: Binosanity ${val ? 'enabled' : 'disabled'}`);
-  }
-  if (slotData.keysanity !== undefined) {
-    const val = parseBool(slotData.keysanity);
-    setters.setKeysanity(val);
-    addLog(`⚙️ Server: Keysanity ${val ? 'enabled' : 'disabled'}`);
-  }
-  if (slotData.gemsanity !== undefined) {
-    const val = parseBool(slotData.gemsanity);
-    setters.setGemsanity(val);
-    addLog(`⚙️ Server: Gemsanity ${val ? 'enabled' : 'disabled'}`);
-  }
-  if (slotData.carsanity !== undefined) {
-    const val = parseBool(slotData.carsanity);
-    setters.setCarsanity(val);
-    addLog(`⚙️ Server: Carsanity ${val ? 'enabled' : 'disabled'}`);
-  }
-
-  // Handle strawberry requirements
-  if (slotData.strawberries_required !== undefined) {
-    const required = parseInt(String(slotData.strawberries_required));
-    if (!isNaN(required) && required >= 0) {
-      setters.setGoalStrawberryRequirement(required);
-      addLog(`🍓 Server: Strawberry requirement set to ${required}`);
-    }
-  }
-
-  // Handle strawberry requirements from percentage
-  if (slotData.strawberries_required_percentage !== undefined && slotData.total_strawberries !== undefined) {
-    const percentage = parseInt(String(slotData.strawberries_required_percentage));
-    const total = parseInt(String(slotData.total_strawberries));
-    if (!isNaN(percentage) && !isNaN(total)) {
-      const required = Math.ceil((percentage / 100) * total);
-      setters.setGoalStrawberryRequirement(required);
-      addLog(`🍓 Server: Strawberry requirement set to ${required} (${percentage}% of ${total})`);
-    }
-  }
-}
 
 /* ===============================
    App
@@ -647,10 +290,26 @@ export default function App() {
 
     initialize();
   }, [isInitialized]);
+
+  /* ---------- Memoize configuration to reduce dependencies ---------- */
+  const locationConfig = useMemo(() => ({
+    selectedGoal,
+    strawberryCount,
+    goalStrawberryRequirement,
+    includeBSides,
+    includeCSides,
+    includeGoldenStrawberries,
+    includeCore,
+    includeFarewell,
+    includeCheckpoints,
+    lockGoalArea,
+  }), [selectedGoal, strawberryCount, goalStrawberryRequirement, includeBSides, includeCSides, includeGoldenStrawberries, includeCore, includeFarewell, includeCheckpoints, lockGoalArea]);
+
   /* ---------- Calculate reachability ---------- */
 const locationsWithReachability = useMemo(() => {
   if (!isInitialized || Object.keys(locations).length === 0) return locations;
   
+  const config = locationConfig;
   const next = { ...locations };
   const filtered: Record<string, LocationState> = {};
   
@@ -663,7 +322,7 @@ const locationsWithReachability = useMemo(() => {
         
         // Check goal-based filtering
         const goalChapter = (() => {
-          switch (selectedGoal) {
+          switch (config.selectedGoal) {
             case "summit-a": case "summit-b": case "summit-c": return 7;
             case "core-a": case "core-b": case "core-c": return 9;
             case "empty-space": return 8; // Epilogue
@@ -681,22 +340,22 @@ const locationsWithReachability = useMemo(() => {
         // Check side filtering
         // side filtering: allow individually for B and C
         const side = extractSideFromId(loc.id);
-        if (side === "B" && !includeBSides) return false;
-        if (side === "C" && !includeCSides) return false;
+        if (side === "B" && !config.includeBSides) return false;
+        if (side === "C" && !config.includeCSides) return false;
         
         // Check golden strawberries
-        if (!includeGoldenStrawberries && loc.displayName.toLowerCase().includes("golden strawberry")) {
+        if (!config.includeGoldenStrawberries && loc.displayName.toLowerCase().includes("golden strawberry")) {
           return false;
         }
         
         // Check Core chapter
-        if (!includeCore && loc.chapter === 9) return false;
+        if (!config.includeCore && loc.chapter === 9) return false;
         
         // Check Farewell chapter
-        if (!includeFarewell && loc.chapter === 10) return false;
+        if (!config.includeFarewell && loc.chapter === 10) return false;
         
         // Check checkpoints
-        if (!includeCheckpoints && loc.type === "checkpoint") return false;
+        if (!config.includeCheckpoints && loc.type === "checkpoint") return false;
         
         return true;
       };
@@ -708,7 +367,7 @@ const locationsWithReachability = useMemo(() => {
       
       // Check goal area locking (affects reachability but not visibility)
       const goalChapter = (() => {
-        switch (selectedGoal) {
+        switch (config.selectedGoal) {
           case "summit-a": case "summit-b": case "summit-c": return 7;
           case "core-a": case "core-b": case "core-c": return 9;
           case "empty-space": return 8;
@@ -717,10 +376,10 @@ const locationsWithReachability = useMemo(() => {
         }
       })();
       
-      if (lockGoalArea && goalChapter !== null && loc.chapter === goalChapter && goalStrawberryRequirement > 0) {
-        if (strawberryCount < goalStrawberryRequirement) {
+      if (config.lockGoalArea && goalChapter !== null && loc.chapter === goalChapter && config.goalStrawberryRequirement > 0) {
+        if (config.strawberryCount < config.goalStrawberryRequirement) {
           loc.reachable = false;
-          loc.logicEvaluation = { status: "locked", missing: [`Requires ${goalStrawberryRequirement} strawberries (have ${strawberryCount})`] };
+          loc.logicEvaluation = { status: "locked", missing: [`Requires ${config.goalStrawberryRequirement} strawberries (have ${config.strawberryCount})`] };
           filtered[loc.id] = loc;
           return;
         }
@@ -746,27 +405,8 @@ const locationsWithReachability = useMemo(() => {
     }
   });
   
-  // Debug Golden Ridge filtering
-  const goldenRidgeInInput = Object.values(next).filter(l => l.chapter === 4);
-  const goldenRidgeInOutput = Object.values(filtered).filter(l => l.chapter === 4);
-  if (goldenRidgeInInput.length > 0) {
-    console.log("Golden Ridge filtering debug:");
-    console.log("- Input locations (chapter 4):", goldenRidgeInInput.length);
-    console.log("- Output locations (chapter 4):", goldenRidgeInOutput.length);
-    console.log("- Filtered out:", goldenRidgeInInput.length - goldenRidgeInOutput.length);
-    if (goldenRidgeInOutput.length < goldenRidgeInInput.length) {
-      const filteredOut = goldenRidgeInInput.filter(l => !filtered[l.id]);
-      console.log("- Sample filtered out:", filteredOut.slice(0, 3).map(l => ({
-        id: l.id,
-        name: l.displayName,
-        type: l.type,
-        isCollectible: isCollectibleLocationState(l)
-      })));
-    }
-  }
-  
   return filtered;
-}, [mechanics, allowSeq, isInitialized, locations, selectedGoal, strawberryCount, goalStrawberryRequirement, includeBSides, includeCSides, includeGoldenStrawberries, includeCore, includeFarewell, includeCheckpoints, lockGoalArea]); 
+}, [mechanics, allowSeq, isInitialized, locations, locationConfig]); 
 
   /* ---------- Save location logic ---------- */
 useEffect(() => {
@@ -2225,8 +1865,7 @@ filteredLocations.forEach((loc) => {
       <div style={{ 
         padding: '1.5rem', 
         marginBottom: '1.5rem',
-        background: 'rgba(30, 41, 59, 0.8)',
-        backdropFilter: 'blur(10px)',
+        background: 'rgba(30, 41, 59, 0.95)',
         borderRadius: '12px',
         border: '1px solid rgba(139, 92, 246, 0.3)',
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
@@ -2499,8 +2138,7 @@ filteredLocations.forEach((loc) => {
       <div style={{ 
         marginBottom: "2rem",
         padding: "1.5rem",
-        background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%)',
-        backdropFilter: 'blur(10px)',
+        background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%)',
         borderRadius: "16px",
         border: "2px solid rgba(139, 92, 246, 0.3)",
         boxShadow: '0 10px 40px rgba(0, 0, 0, 0.4)'
@@ -3078,8 +2716,7 @@ filteredLocations.forEach((loc) => {
         gap: '15px',
         marginBottom: '2rem',
         padding: '1.5rem',
-        background: 'rgba(30, 41, 59, 0.8)',
-        backdropFilter: 'blur(10px)',
+        background: 'rgba(30, 41, 59, 0.95)',
         borderRadius: '12px',
         border: '1px solid rgba(139, 92, 246, 0.3)',
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'

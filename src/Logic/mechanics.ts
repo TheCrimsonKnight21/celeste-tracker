@@ -1,3 +1,21 @@
+/**
+ * Game Mechanics Definitions
+ * 
+ * Defines all collectible mechanics that affect location reachability in
+ * the Celeste Archipelago randomizer.
+ * 
+ * Categories:
+ * - Movement mechanics (dash refills, springs, feathers)
+ * - Block types (cassette blocks, dream blocks, etc.)
+ * - Enemies (bumpers, kevins, pufferfish)
+ * - Key items (hotel keys, temple keys, etc.)
+ * 
+ * The MechanicsState type tracks which mechanics are currently available
+ * to the player, which is used to calculate location reachability.
+ * 
+ * @module
+ */
+
 export const RANDOMIZED_MECHANICS = [
   "dashrefills",
   "springs",

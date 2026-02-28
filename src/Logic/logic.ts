@@ -1,3 +1,20 @@
+/**
+ * Logic Evaluation Engine
+ * 
+ * Evaluates whether a location is reachable given the current set of
+ * mechanics/items available to the player.
+ * 
+ * Logic nodes form a tree structure using AND/OR operators to create
+ * complex requirement chains. The evaluator recursively walks this tree
+ * and returns the reachability status:
+ * - "free": Can be accessed without sequence breaking
+ * - "sequence": Requires sequence breaking
+ * - "locked": Currently unreachable
+ * 
+ * Also returns a list of missing mechanics needed to make a location reachable.
+ * 
+ * @module
+ */
 
 import type { LogicNode, MechanicState, LogicCondition } from "../Data/types";
 import type { LocationDef } from "../Data/locations";

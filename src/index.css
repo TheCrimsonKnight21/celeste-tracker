@@ -1,36 +1,42 @@
 :root {
-  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Avenir, Helvetica, Arial, sans-serif;
+  /* Retro Game Font */
+  font-family: 'Courier New', monospace;
   line-height: 1.6;
   font-weight: 400;
 
-  /* Modern Color Palette */
-  --primary-color: #8b5cf6;
-  --primary-dark: #7c3aed;
-  --secondary-color: #10b981;
-  --accent-color: #f59e0b;
-  --danger-color: #ef4444;
-  --info-color: #3b82f6;
+  /* Celeste Game Color Palette */
+  --primary-color: #e84c7d;        /* Softer Pink - Madeline's color */
+  --primary-dark: #d63a69;          /* Deep Magenta */
+  --secondary-color: #00d9ff;       /* Cyan - Oshiro/Protagonist contrast */
+  --accent-color: #ffd700;          /* Gold - Collectibles */
+  --danger-color: #ff6b6b;          /* Red - Danger/Hazards */
+  --info-color: #667eea;            /* Purple - Sky/Depth */
+  --success-color: #51cf66;         /* Green - Success/Achievement */
+  --warning-color: #ffa500;         /* Orange - Warning */
   
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
-  --surface: #1e293b;
-  --surface-hover: #334155;
+  /* Background - Mountain/Sky themed */
+  --bg-primary: #0a0014;            /* Deep space purple */
+  --bg-secondary: #1a0033;          /* Dark purple */
+  --bg-tertiary: #2d0052;           /* Mountain shadow purple */
+  --surface: #16001f;               /* Deep purple surface */
+  --surface-hover: #2a0040;         /* Hover state */
+  --surface-dark: #0d0010;          /* Darkest surface */
   
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
+  --text-primary: #ffffff;          /* White - High contrast */
+  --text-secondary: #e0e0e0;        /* Light gray */
+  --text-muted: #a0a0a0;            /* Muted gray */
+  --text-dark: #1a1a1a;             /* Dark text */
   
-  --border-color: #334155;
-  --border-focus: #8b5cf6;
+  --border-color: #ff1493;          /* Pink borders for pixel style */
+  --border-focus: #00d9ff;          /* Cyan focus */
   
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 4px rgba(255, 20, 147, 0.3);
+  --shadow-md: 0 4px 8px rgba(255, 20, 147, 0.4);
+  --shadow-lg: 0 8px 16px rgba(255, 20, 147, 0.5);
+  --shadow-xl: 0 12px 24px rgba(255, 20, 147, 0.6);
 
   color: var(--text-primary);
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  background: linear-gradient(180deg, #0a0014 0%, #1a0033 50%, #0a0014 100%);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -63,64 +69,78 @@ body {
   background-attachment: fixed;
 }
 
+#root {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
 h1 {
   font-size: 2.5em;
   line-height: 1.2;
   font-weight: 700;
-  background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-family: 'Courier New', monospace;
+  color: var(--primary-color);
+  text-shadow: 3px 3px 0px var(--secondary-color),
+               6px 6px 0px rgba(255, 20, 147, 0.3);
   margin: 0 0 1rem 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 h2 {
   font-size: 1.5em;
   line-height: 1.3;
-  font-weight: 600;
-  color: var(--text-primary);
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  color: var(--primary-color);
   margin: 0 0 0.75rem 0;
+  text-shadow: 2px 2px 0px var(--secondary-color);
+  border-bottom: 3px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+  letter-spacing: 1px;
 }
+
+h3 {
+  font-size: 1.2em;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  color: var(--primary-color);
+  margin: 0.5rem 0;
+}
+
+/* ================================
+   Button Styles - Pixel Art Retro
+================================ */
 
 button {
-  border-radius: 8px;
-  border: none;
+  border-radius: 0px;
+  border: 3px solid var(--primary-color);
   padding: 0.65em 1.25em;
   font-size: 0.95em;
-  font-weight: 600;
-  font-family: inherit;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-  color: white;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  background: var(--surface);
+  color: var(--primary-color);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow-sm);
+  transition: all 0.1s ease;
+  box-shadow: 4px 4px 0px rgba(255, 20, 147, 0.4), inset -2px -2px 0px rgba(0, 0, 0, 0.5);
   position: relative;
-  overflow: hidden;
-}
-
-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
+  overflow: visible;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 button:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-button:hover::before {
-  left: 100%;
+  background: var(--primary-color);
+  color: var(--surface);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px rgba(255, 20, 147, 0.6), inset -2px -2px 0px rgba(0, 0, 0, 0.5);
 }
 
 button:active {
-  transform: translateY(0);
-  box-shadow: var(--shadow-sm);
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px rgba(255, 20, 147, 0.4), inset -2px -2px 0px rgba(0, 0, 0, 0.5);
 }
 
 button:disabled {
@@ -134,56 +154,494 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
+/* Button variants */
+button.btn-secondary {
+  border-color: #667eea;
+  color: #667eea;
+}
+
+button.btn-secondary:hover {
+  background: #667eea;
+  color: var(--surface);
+}
+
+button.btn-danger {
+  border-color: var(--danger-color);
+  color: var(--danger-color);
+}
+
+button.btn-danger:hover {
+  background: var(--danger-color);
+  color: var(--surface);
+}
+
+button.btn-success {
+  border-color: var(--success-color);
+  color: var(--success-color);
+}
+
+button.btn-success:hover {
+  background: var(--success-color);
+  color: var(--surface);
+}
+
+button.btn-warning {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+button.btn-warning:hover {
+  background: var(--accent-color);
+  color: var(--surface);
+}
+
+button.btn-muted {
+  border-color: #a0a0a0;
+  color: #a0a0a0;
+}
+
+/* ================================
+   Form Elements - Pixel Art
+================================ */
+
 input[type="text"],
+input[type="password"],
 input[type="number"],
 select {
-  background: var(--surface);
-  border: 1px solid var(--border-color);
+  background: var(--surface-dark);
+  border: 3px solid var(--border-color);
   color: var(--text-primary);
-  border-radius: 6px;
+  border-radius: 0px;
   padding: 0.5em 0.75em;
-  font-family: inherit;
+  font-family: 'Courier New', monospace;
   font-size: 0.95em;
-  transition: all 0.2s ease;
+  font-weight: 600;
+  transition: all 0.1s ease;
+  box-shadow: inset -2px -2px 0px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+select option {
+  background: var(--surface-dark);
+  color: var(--text-primary);
+  padding: 8px;
 }
 
 input[type="text"]:focus,
+input[type="password"]:focus,
 input[type="number"]:focus,
 select:focus {
   outline: none;
-  border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 0px rgba(0, 217, 255, 0.3), inset -2px -2px 0px rgba(0, 0, 0, 0.5);
+  background: rgba(0, 217, 255, 0.05);
 }
 
 input[type="checkbox"] {
   cursor: pointer;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   accent-color: var(--primary-color);
+  border: 2px solid var(--border-color);
+  border-radius: 0px;
 }
 
-/* Scrollbar styling */
+/* ================================
+   Card Styles - Pixel Art
+================================ */
+
+.card {
+  background: var(--surface);
+  border-radius: 0px;
+  border: 3px solid var(--border-color);
+  padding: 1.5rem;
+  box-shadow: 4px 4px 0px rgba(255, 20, 147, 0.3), inset -2px -2px 0px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.stat-card {
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-hover) 100%);
+  border-radius: 10px;
+  padding: 1.25rem;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+.stat-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+}
+
+/* ================================
+   Badge Styles
+================================ */
+
+.badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0px;
+  font-size: 0.75em;
+  font-weight: 700;
+  background: var(--surface-dark);
+  color: white;
+  border: 3px solid var(--primary-color);
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 3px 3px 0px rgba(255, 20, 147, 0.4), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+  transition: all 0.1s ease;
+}
+
+.badge-primary {
+  background: var(--surface-dark);
+  border-color: var(--primary-color);
+  color: #ff1493;
+  box-shadow: 3px 3px 0px rgba(255, 20, 147, 0.4), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.badge-success {
+  background: var(--surface-dark);
+  border-color: var(--secondary-color);
+  color: var(--secondary-color);
+  box-shadow: 3px 3px 0px rgba(0, 217, 255, 0.3), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.badge-warning {
+  background: var(--surface-dark);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  box-shadow: 3px 3px 0px rgba(255, 215, 0, 0.3), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.badge-danger {
+  background: var(--surface-dark);
+  border-color: #ef4444;
+  color: #ef4444;
+  box-shadow: 3px 3px 0px rgba(239, 68, 68, 0.3), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.badge-info {
+  background: var(--surface-dark);
+  border-color: #3b82f6;
+  color: #3b82f6;
+  box-shadow: 3px 3px 0px rgba(59, 130, 246, 0.3), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+}
+
+/* ================================
+   Location Item Styles
+================================ */
+
+.location-item {
+  opacity: 1;
+  padding: 15px;
+  background: var(--surface-dark);
+  border: 3px solid var(--border-color);
+  border-radius: 0px;
+  box-shadow: 3px 3px 0px rgba(255, 20, 147, 0.2), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+  transition: all 0.1s ease;
+}
+
+.location-item.unreachable {
+  opacity: 0.6;
+  border-color: #555;
+}
+
+.location-item.reachable {
+  border-color: var(--secondary-color);
+  box-shadow: 3px 3px 0px rgba(0, 217, 255, 0.3), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.location-item.checked {
+  border-color: var(--primary-color);
+  box-shadow: 3px 3px 0px rgba(255, 20, 147, 0.3), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.location-item:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px rgba(255, 20, 147, 0.25), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+}
+
+/* ================================
+   Mechanic Badge Styles
+================================ */
+
+.mechanic-badge {
+  padding: 8px 12px;
+  border-radius: 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  border: 3px solid var(--primary-color);
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  font-weight: 700;
+  background: var(--surface-dark);
+  color: var(--primary-color);
+  box-shadow: 2px 2px 0px rgba(255, 20, 147, 0.3), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.mechanic-badge.active {
+  background: var(--surface-dark);
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  box-shadow: 2px 2px 0px rgba(0, 217, 255, 0.3), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.mechanic-badge.inactive {
+  background: var(--surface-dark);
+  color: #999;
+  border-color: #666;
+  box-shadow: 2px 2px 0px rgba(100, 100, 100, 0.2), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.mechanic-badge:hover {
+  transform: translate(1px, 1px);
+}
+
+.mechanic-badge.key-type {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  box-shadow: 2px 2px 0px rgba(255, 215, 0, 0.2), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.mechanic-badge.key-type.inactive {
+  border-color: #666;
+  color: #999;
+}
+
+/* ================================
+   Filter Panel
+================================ */
+
+.filter-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(30, 41, 59, 0.95);
+  border-radius: 0px;
+  border: 3px solid var(--primary-color);
+  box-shadow: 4px 4px 0px rgba(255, 20, 147, 0.3), inset -2px -2px 0px rgba(0, 0, 0, 0.5);
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  font-size: 0.85em;
+  letter-spacing: 0.5px;
+  font-family: 'Courier New', monospace;
+}
+
+.filter-group select,
+.filter-group input {
+  width: 100%;
+  padding: 8px;
+}
+
+/* ================================
+   Stats Section
+================================ */
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 2rem;
+}
+
+.stat-box {
+  padding: 1.25rem;
+  background: var(--surface-dark);
+  border-radius: 0px;
+  text-align: center;
+  border: 3px solid var(--accent-color);
+  box-shadow: 3px 3px 0px rgba(255, 215, 0, 0.3), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+  transition: all 0.1s ease;
+}
+
+.stat-box:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px rgba(255, 215, 0, 0.3), inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.stat-label {
+  font-size: 0.8em;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Courier New', monospace;
+}
+
+.stat-value {
+  font-size: 2em;
+  font-weight: bold;
+  color: var(--primary-color);
+  font-family: 'Courier New', monospace;
+}
+
+/* ================================
+   Section Headers
+================================ */
+
+.section-header {
+  padding: 12px 15px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border: 3px solid var(--primary-color);
+  box-shadow: 3px 3px 0px rgba(255, 20, 147, 0.4), inset -1px -1px 0px rgba(0, 0, 0, 0.3);
+  transition: all 0.1s ease;
+}
+
+.section-header:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0px rgba(255, 20, 147, 0.4), inset -1px -1px 0px rgba(0, 0, 0, 0.3);
+}
+
+.section-header h2 {
+  margin: 0;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.section-toggle {
+  font-size: 1.5rem;
+}
+
+/* ================================
+   Location Grid
+================================ */
+
+.location-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 15px;
+  margin-bottom: 2rem;
+}
+
+.mechanic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* ================================
+   Debug Panel
+================================ */
+
+.debug-panel {
+  background: #0a0014;
+  color: #00ff00;
+  padding: 12px;
+  height: 300px;
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  border-radius: 0px;
+  margin-bottom: 10px;
+  border: 3px solid var(--primary-color);
+  box-shadow: 3px 3px 0px rgba(255, 20, 147, 0.2);
+}
+
+.debug-log-entry {
+  padding: 4px 0;
+  border-bottom: 1px solid #333;
+}
+
+.debug-log-entry:last-child {
+  border-bottom: none;
+}
+
+.debug-empty {
+  color: #666;
+  text-align: center;
+  padding: 20px;
+}
+
+/* ================================
+   Scrollbar Styling
+================================ */
+
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
   background: var(--bg-secondary);
-  border-radius: 5px;
+  border: 1px solid var(--border-color);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--bg-tertiary);
-  border-radius: 5px;
+  background: var(--primary-color);
   border: 2px solid var(--bg-secondary);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--border-color);
+  background: var(--secondary-color);
 }
 
-/* Animations */
+/* ================================
+   Animations
+================================ */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -222,3 +680,93 @@ input[type="checkbox"] {
 .slide-in {
   animation: slideIn 0.3s ease-out;
 }
+
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ================================
+   Utility Classes
+================================ */
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+
+.gap-1 { gap: 0.5rem; }
+.gap-2 { gap: 1rem; }
+
+/* ================================
+   Responsive Design
+================================ */
+
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  .location-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  .filter-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  #root {
+    padding: 0.5rem;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
+  h2 {
+    font-size: 1.2em;
+  }
+
+  .location-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-container {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-panel {
+    gap: 10px;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+

@@ -1,4 +1,25 @@
+/**
+ * Location Definitions Module
+ * 
+ * Defines all collectible and event locations in the Celeste levels.
+ * Uses the Archipelago protocol's location names and IDs.
+ * 
+ * Key Exports:
+ * - LocationDef: Type for location definitions
+ * - LocationState: Type for runtime location state
+ * - LOCATIONS: Array of all available locations
+ * 
+ * Features:
+ * - Automatic type detection from display names
+ * - Chapter/side extraction from location IDs
+ * - Stable numeric ID generation for AP integration
+ * - Requirement rule loading from JSON
+ * 
+ * @module
+ */
+
 import type { LogicNode } from "./types";
+import { simpleStringHash } from "../utils/helpers";
 
 export type LocationDef = {
   id: string;
@@ -67,16 +88,6 @@ function inferChapter(name: string): number {
   return -1;
 }
 
-// Generate a simple hash from string for apItemId
-function simpleStringHash(str: string): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // Convert to 32-bit integer
-  }
-  return Math.abs(hash) % 1000000; // Limit to reasonable range
-}
 
 // Clean up ID by removing special characters
 function cleanId(name: string): string {
