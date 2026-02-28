@@ -2,6 +2,8 @@ import { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { type MechanicsState } from "../Logic/mechanics";
 import { DebugOverlay } from "./DebugOverlay";
 import { LOCATIONS, type LocationState, type LocationDef } from "../Data/locations";
+import type { LogicNode } from "../Data/types";
+import { buildRuleMap, applyRuleMap } from "../Data/requirements";
 import { createEmptyRandomizedMechanics, type RandomizedMechanicsState } from "../Logic/mechanics";
 import LogicEditor from "./LogicEditor";
 import { evaluateLogic } from "../Logic/logic";
@@ -310,11 +312,16 @@ function processSlotData(
   setters: {
     setSelectedGoal: (goal: string) => void;
     setLockGoalArea: (lock: boolean) => void;
-    setIncludeSidesBC: (include: boolean) => void;
+    setIncludeBSides: (include: boolean) => void;
+    setIncludeCSides: (include: boolean) => void;
     setIncludeGoldenStrawberries: (include: boolean) => void;
     setIncludeCore: (include: boolean) => void;
     setIncludeFarewell: (include: boolean) => void;
     setIncludeCheckpoints: (include: boolean) => void;
+    setBinosanity: (val: boolean) => void;
+    setKeysanity: (val: boolean) => void;
+    setGemsanity: (val: boolean) => void;
+    setCarsanity: (val: boolean) => void;
     setGoalStrawberryRequirement: (req: number) => void;
   },
   addLog: (message: string) => void
@@ -340,13 +347,9 @@ function processSlotData(
   if (slotData.include_b_sides !== undefined || slotData.include_c_sides !== undefined) {
     const includeBSides = parseBool(slotData.include_b_sides);
     const includeCSides = parseBool(slotData.include_c_sides);
-    if (includeBSides || includeCSides) {
-      setters.setIncludeSidesBC(true);
-      addLog(`⚙️ Server: Include sides enabled`);
-    } else if (slotData.include_b_sides !== undefined && slotData.include_c_sides !== undefined) {
-      setters.setIncludeSidesBC(false);
-      addLog(`⚙️ Server: B/C sides disabled`);
-    }
+    setters.setIncludeBSides(includeBSides);
+    setters.setIncludeCSides(includeCSides);
+    addLog(`⚙️ Server: B sides ${includeBSides ? 'enabled' : 'disabled'}, C sides ${includeCSides ? 'enabled' : 'disabled'}`);
   }
 
   if (slotData.include_goldens !== undefined) {
@@ -371,6 +374,28 @@ function processSlotData(
     const checkpointsanityVal = parseBool(slotData.checkpointsanity);
     setters.setIncludeCheckpoints(checkpointsanityVal);
     addLog(`⚙️ Server: Checkpointsanity ${checkpointsanityVal ? 'enabled' : 'disabled'}`);
+  }
+
+  // additional sanity toggles
+  if (slotData.binosanity !== undefined) {
+    const val = parseBool(slotData.binosanity);
+    setters.setBinosanity(val);
+    addLog(`⚙️ Server: Binosanity ${val ? 'enabled' : 'disabled'}`);
+  }
+  if (slotData.keysanity !== undefined) {
+    const val = parseBool(slotData.keysanity);
+    setters.setKeysanity(val);
+    addLog(`⚙️ Server: Keysanity ${val ? 'enabled' : 'disabled'}`);
+  }
+  if (slotData.gemsanity !== undefined) {
+    const val = parseBool(slotData.gemsanity);
+    setters.setGemsanity(val);
+    addLog(`⚙️ Server: Gemsanity ${val ? 'enabled' : 'disabled'}`);
+  }
+  if (slotData.carsanity !== undefined) {
+    const val = parseBool(slotData.carsanity);
+    setters.setCarsanity(val);
+    addLog(`⚙️ Server: Carsanity ${val ? 'enabled' : 'disabled'}`);
   }
 
   // Handle strawberry requirements
@@ -473,12 +498,20 @@ export default function App() {
   const [selectedGoal, setSelectedGoal] = useState<string>("summit-a");
   const [strawberryCount, setStrawberryCount] = useState<number>(0);
   const [goalStrawberryRequirement, setGoalStrawberryRequirement] = useState<number>(0);
-  const [includeSidesBC, setIncludeSidesBC] = useState<boolean>(true);
+  // toggles derived from server slot data or manual UI
+  const [includeBSides, setIncludeBSides] = useState<boolean>(true);
+  const [includeCSides, setIncludeCSides] = useState<boolean>(true);
   const [includeGoldenStrawberries, setIncludeGoldenStrawberries] = useState<boolean>(true);
   const [includeCore, setIncludeCore] = useState<boolean>(true);
   const [includeFarewell, setIncludeFarewell] = useState<boolean>(true);
   const [includeCheckpoints, setIncludeCheckpoints] = useState<boolean>(false);
   const [lockGoalArea, setLockGoalArea] = useState<boolean>(false);
+
+  // sanity toggles from slot data
+  const [binosanity, setBinosanity] = useState<boolean>(false);
+  const [keysanity, setKeysanity] = useState<boolean>(false);
+  const [gemsanity, setGemsanity] = useState<boolean>(false);
+  const [carsanity, setCarsanity] = useState<boolean>(false);
 
   /* ---------- Archipelago URL ---------- */
   const [archipelagoUrl, setArchipelagoUrl] = useState<string>(() => {
@@ -533,42 +566,74 @@ export default function App() {
     /* ---------- Initialize locations ---------- */
   useEffect(() => {
     if (isInitialized) return;
-    
-    console.log("Initializing locations...");
-    const savedLogic = JSON.parse(localStorage.getItem("celeste-location-logic") || "{}");
-    const savedChecked = JSON.parse(localStorage.getItem("celeste-location-checked") || "{}");
-    
-    const initial: Record<string, LocationState> = {};
-    LOCATIONS.forEach((loc) => {
-      // Check if we have saved logic for this location
-      // If not, use a default logic
-      let defaultLogic = {
-        type: "has" as const,
-        key: "noCondition"
-      };
-      
-      // Try to get logic from saved, otherwise use default
-      const logic = savedLogic[loc.id] || defaultLogic;
-      
-      initial[loc.id] = {
-        ...loc,
-        checked: savedChecked[loc.id] || false,
-        reachable: false,
-        logic: logic,
-        apLocationId: undefined,
-        apItemId: loc.apItemId || simpleStringHash(loc.id),
-      };
-    });
-    
-    console.log("Initial locations set:", Object.keys(initial).length);
-    console.log("Checked locations loaded:", Object.values(initial).filter(l => l.checked).length);
-    
-    // Debug: Show which locations have logic
-    const locationsWithCustomLogic = Object.values(initial).filter(l => savedLogic[l.id]);
-    console.log("Locations with saved logic:", locationsWithCustomLogic.length);
-    
-    setLocations(initial);
-    setIsInitialized(true);
+
+    async function initialize() {
+      console.log("Initializing locations...");
+
+      // attempt to fetch rules from the CelesteLevelData.json file
+      console.log("Fetching location rules...");
+      try {
+        const ruleMap = await buildRuleMap();
+        applyRuleMap(ruleMap);
+        console.log(`Applied rules for ${Object.keys(ruleMap).length} locations`);
+        // show a couple of examples so developers can inspect what was loaded
+        const samples = LOCATIONS.filter(l => l.requires && l.requires.length > 0).slice(0, 5);
+        console.log("example location requirements:", samples.map(s => ({name: s.apName, req: s.requires})));
+      } catch (e) {
+        console.warn("Failed to load location rules", e);
+      }
+
+      const savedLogic = JSON.parse(localStorage.getItem("celeste-location-logic") || "{}");
+      const savedChecked = JSON.parse(localStorage.getItem("celeste-location-checked") || "{}");
+
+      const initial: Record<string, LocationState> = {};
+      LOCATIONS.forEach((loc) => {
+        // Determine a default logic node based on requires if no saved logic
+        let defaultLogic: LogicNode = {
+          type: "has",
+          key: "noCondition",
+        };
+        if (loc.requires && loc.requires.length > 0) {
+          if (loc.requires.length === 1) {
+            defaultLogic = { type: "has", key: loc.requires[0] };
+          } else {
+            defaultLogic = {
+              type: "and",
+              nodes: loc.requires.map((k) => ({ type: "has", key: k })),
+            };
+          }
+        }
+
+        // Try to get logic from saved, otherwise use default.  If the
+        // saved logic is just the placeholder we generated before (i.e. has
+        // key "noCondition"), treat it as missing so that rules from the
+        // JSON are applied.
+        const saved = savedLogic[loc.id];
+        const logic =
+          saved && saved.key && saved.key !== "noCondition" ? saved : defaultLogic;
+
+        initial[loc.id] = {
+          ...loc,
+          checked: savedChecked[loc.id] || false,
+          reachable: false,
+          logic: logic,
+          apLocationId: undefined,
+          apItemId: loc.apItemId || simpleStringHash(loc.id),
+        };
+      });
+
+      console.log("Initial locations set:", Object.keys(initial).length);
+      console.log("Checked locations loaded:", Object.values(initial).filter(l => l.checked).length);
+
+      // Debug: Show which locations have logic
+      const locationsWithCustomLogic = Object.values(initial).filter(l => savedLogic[l.id]);
+      console.log("Locations with saved logic:", locationsWithCustomLogic.length);
+
+      setLocations(initial);
+      setIsInitialized(true);
+    }
+
+    initialize();
   }, [isInitialized]);
   /* ---------- Calculate reachability ---------- */
 const locationsWithReachability = useMemo(() => {
@@ -602,10 +667,10 @@ const locationsWithReachability = useMemo(() => {
         if (goalChapter !== null && loc.chapter > goalChapter) return false;
         
         // Check side filtering
-        if (!includeSidesBC) {
-          const side = extractSideFromId(loc.id);
-          if (side && side !== "A") return false;
-        }
+        // side filtering: allow individually for B and C
+        const side = extractSideFromId(loc.id);
+        if (side === "B" && !includeBSides) return false;
+        if (side === "C" && !includeCSides) return false;
         
         // Check golden strawberries
         if (!includeGoldenStrawberries && loc.displayName.toLowerCase().includes("golden strawberry")) {
@@ -689,7 +754,7 @@ const locationsWithReachability = useMemo(() => {
   }
   
   return filtered;
-}, [mechanics, allowSeq, isInitialized, locations, selectedGoal, strawberryCount, goalStrawberryRequirement, includeSidesBC, includeGoldenStrawberries, includeCore, includeFarewell, includeCheckpoints, lockGoalArea]); 
+}, [mechanics, allowSeq, isInitialized, locations, selectedGoal, strawberryCount, goalStrawberryRequirement, includeBSides, includeCSides, includeGoldenStrawberries, includeCore, includeFarewell, includeCheckpoints, lockGoalArea]); 
 
   /* ---------- Save location logic ---------- */
 useEffect(() => {
@@ -1003,11 +1068,16 @@ const sendAPMessage = (message: any) => {
             {
               setSelectedGoal,
               setLockGoalArea,
-              setIncludeSidesBC,
+              setIncludeBSides,
+              setIncludeCSides,
               setIncludeGoldenStrawberries,
               setIncludeCore,
               setIncludeFarewell,
               setIncludeCheckpoints,
+              setBinosanity,
+              setKeysanity,
+              setGemsanity,
+              setCarsanity,
               setGoalStrawberryRequirement
             },
             addLog
@@ -1056,11 +1126,16 @@ const sendAPMessage = (message: any) => {
           {
             setSelectedGoal,
             setLockGoalArea,
-            setIncludeSidesBC,
+            setIncludeBSides,
+            setIncludeCSides,
             setIncludeGoldenStrawberries,
             setIncludeCore,
             setIncludeFarewell,
             setIncludeCheckpoints,
+            setBinosanity,
+            setKeysanity,
+            setGemsanity,
+            setCarsanity,
             setGoalStrawberryRequirement
           },
           addLog
@@ -1083,11 +1158,16 @@ const sendAPMessage = (message: any) => {
         {
           setSelectedGoal,
           setLockGoalArea,
-          setIncludeSidesBC,
+          setIncludeBSides,
+          setIncludeCSides,
           setIncludeGoldenStrawberries,
           setIncludeCore,
           setIncludeFarewell,
           setIncludeCheckpoints,
+          setBinosanity,
+          setKeysanity,
+          setGemsanity,
+          setCarsanity,
           setGoalStrawberryRequirement
         },
         addLog
@@ -1265,14 +1345,16 @@ if (msg.cmd === "DataPackage") {
         }
         if ((option === 'include_b_sides' || option === 'include_c_sides' || option === 'include_sides') && typeof game.options[option] === 'boolean') {
           if (option === 'include_sides') {
-            setIncludeSidesBC(game.options[option]);
-            addLog(`⚙️ Auto-set include_sides: ${game.options[option]}`);
-          } else if (option === 'include_b_sides' && game.options[option]) {
-            setIncludeSidesBC(true);
-            addLog(`⚙️ Auto-set include_sides: true (from include_b_sides)`);
-          } else if (option === 'include_c_sides' && game.options[option]) {
-            setIncludeSidesBC(true);
-            addLog(`⚙️ Auto-set include_sides: true (from include_c_sides)`);
+            const val = game.options[option];
+            setIncludeBSides(val);
+            setIncludeCSides(val);
+            addLog(`⚙️ Auto-set include_sides: ${val}`);
+          } else if (option === 'include_b_sides') {
+            setIncludeBSides(game.options[option]);
+            addLog(`⚙️ Auto-set include_b_sides: ${game.options[option]}`);
+          } else if (option === 'include_c_sides') {
+            setIncludeCSides(game.options[option]);
+            addLog(`⚙️ Auto-set include_c_sides: ${game.options[option]}`);
           }
         }
         
@@ -2472,16 +2554,31 @@ filteredLocations.forEach((loc) => {
               borderRadius: '6px',
               cursor: 'pointer',
               transition: 'all 0.2s ease',
-              background: includeSidesBC ? 'rgba(139, 92, 246, 0.2)' : 'transparent'
+              background: (includeBSides || includeCSides) ? 'rgba(139, 92, 246, 0.2)' : 'transparent'
             }}>
-              <input
-                type="checkbox"
-                checked={includeSidesBC}
-                onChange={(e) => setIncludeSidesBC(e.target.checked)}
-                style={{ cursor: 'pointer', transform: 'scale(1.2)' }}
-              />
-              <span>Include Sides B & C</span>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <input
+                    type="checkbox"
+                    checked={includeBSides}
+                    onChange={(e) => setIncludeBSides(e.target.checked)}
+                    style={{ cursor: 'pointer', transform: 'scale(1.2)' }}
+                  />
+                  <span>B sides</span>
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <input
+                    type="checkbox"
+                    checked={includeCSides}
+                    onChange={(e) => setIncludeCSides(e.target.checked)}
+                    style={{ cursor: 'pointer', transform: 'scale(1.2)' }}
+                  />
+                  <span>C sides</span>
+                </label>
+              </div>
             </label>
+            </div>
+            
             
             <label style={{ 
               display: "flex", 
@@ -2563,6 +2660,84 @@ filteredLocations.forEach((loc) => {
               <span>Include Checkpoints (Checkpointsanity)</span>
             </label>
             
+            {/* new sanity toggles */}
+            <label style={{ 
+              display: "flex", 
+              alignItems: "center", 
+              gap: "10px", 
+              color: "var(--text-primary)",
+              padding: '8px',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              background: binosanity ? 'rgba(139, 92, 246, 0.2)' : 'transparent'
+            }}>
+              <input
+                type="checkbox"
+                checked={binosanity}
+                onChange={(e) => setBinosanity(e.target.checked)}
+                style={{ cursor: 'pointer', transform: 'scale(1.2)' }}
+              />
+              <span>Binosanity</span>
+            </label>
+            <label style={{ 
+              display: "flex", 
+              alignItems: "center", 
+              gap: "10px", 
+              color: "var(--text-primary)",
+              padding: '8px',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              background: keysanity ? 'rgba(139, 92, 246, 0.2)' : 'transparent'
+            }}>
+              <input
+                type="checkbox"
+                checked={keysanity}
+                onChange={(e) => setKeysanity(e.target.checked)}
+                style={{ cursor: 'pointer', transform: 'scale(1.2)' }}
+              />
+              <span>Keysanity</span>
+            </label>
+            <label style={{ 
+              display: "flex", 
+              alignItems: "center", 
+              gap: "10px", 
+              color: "var(--text-primary)",
+              padding: '8px',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              background: gemsanity ? 'rgba(139, 92, 246, 0.2)' : 'transparent'
+            }}>
+              <input
+                type="checkbox"
+                checked={gemsanity}
+                onChange={(e) => setGemsanity(e.target.checked)}
+                style={{ cursor: 'pointer', transform: 'scale(1.2)' }}
+              />
+              <span>Gemsanity</span>
+            </label>
+            <label style={{ 
+              display: "flex", 
+              alignItems: "center", 
+              gap: "10px", 
+              color: "var(--text-primary)",
+              padding: '8px',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              background: carsanity ? 'rgba(139, 92, 246, 0.2)' : 'transparent'
+            }}>
+              <input
+                type="checkbox"
+                checked={carsanity}
+                onChange={(e) => setCarsanity(e.target.checked)}
+                style={{ cursor: 'pointer', transform: 'scale(1.2)' }}
+              />
+              <span>Carsanity</span>
+            </label>
+            
             <label style={{ 
               display: "flex", 
               alignItems: "center", 
@@ -2584,7 +2759,7 @@ filteredLocations.forEach((loc) => {
             </label>
           </div>
         </div>
-      </div>
+
 
       {/* Stats */}
       <div style={{ 
